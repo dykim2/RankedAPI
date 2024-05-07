@@ -1,64 +1,76 @@
 const game = require('../models/gameModel.js')
+const asyncHandler = require("express-async-handler");
 
-const postGames = async (req, res) => {
+const postGames = asyncHandler(async (req, res) => {
   try {
-    const info = await game.create(req.body);
-    res.status(200).json(info);
+    const gameResult = await game.create(req.body);
+    res.status(200).json(gameResult);
   } catch (err) {
-    console.log(err.message);
-    res.status(500).json({ message: err.message });
+    if (res.statusCode == 200) {
+      res.status(500);
+    }
+    throw new Error(err.message);
   }
-};
+});
 
-const getGames = async (req, res) => {
+const getGames = asyncHandler(async (req, res) => {
   try {
-    const games = await game.find({});
-    res.status(200).json(games); // gets all the games available on the database
+    const gameResult = await game.find({});
+    throw new Error("bogus error will fix");
+    // res.status(200).json(gameResult); // gets all the games available on the database
   } catch (err) {
-    console.log(err.message);
-    res.status(500).json({ message: err.message });
+    if (res.statusCode == 200) {
+      res.status(500);
+    }
+    throw new Error(err.message);
   }
-};
+});
 
-const findGame = async (req, res) => {
+const findGame = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
-    const games = await game.findById(id);
-    res.status(200).json(games);
+    const gameResult = await game.findById(id);
+    if(!gameResult){
+       res.status(404);
+       throw new Error(`unable to locate a game with id ${id}`);
+    }
+    res.status(200).json(gameResult);
   } catch (err) {
-    console.log(err.message);
-    res.status(500).json({ message: err.message });
+    if (res.statusCode == 200) { // if an error happened, can't return the OK status code
+      res.status(500);
+    }
+    throw new Error(err.message);
   }
-};
+});
 
-const updateGame = async (req, res) => {
+const updateGame = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     console.log(req.body);
     // verify body is not empty
     const result = await game.findByIdAndUpdate(id, req.body);
     if (!result) {
-      return res
-        .status(404)
-        .json({ message: `unable to locate a game with id ${id}` });
+      res.status(404);
+      throw new Error(`unable to locate a game with id ${id}`);
     }
     res.status(200).json(await game.findById(id));
   } catch (err) {
-    console.log(err.message);
-    res.status(500).json({ message: err.message });
+    if (res.statusCode == 200) {
+      res.status(500);
+    }
+    throw new Error(err.message);
   }
-}
+});
 
-const updateTimes = async(req, res) => {
+const updateTimes = asyncHandler(async(req, res) => {
     try {
         const {id} = req.params;
         const body = req.body;
         let index = 0;
         const gameResult = await game.findById(id);
         if(!gameResult){
-            return res
-              .status(404)
-              .json({ message: `unable to locate a game with id ${id}` });
+            res.status(404);
+            throw new Error(`unable to locate a game with id ${id}`);
         }
         let result = null;
         let request = "";
@@ -92,26 +104,29 @@ const updateTimes = async(req, res) => {
         
         // 
     } catch (err) {
-        console.log(err.message);
-        res.status(500).json({ message: err.message });
+        if (!res.statusCode) {
+          res.status(500);
+        }
+        throw new Error(err.message);
     }
-}
+});
 
-const deleteGame = async (req, res) => {
+const deleteGame = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const deletedGame = await game.findByIdAndDelete(id);
     if (!deletedGame) {
-      return res
-        .status(404)
-        .json({ message: `unable to locate a game with id ${id}` });
+      res.status(404);
+      throw new Error(`unable to locate a game with id ${id}`);
     }
     res.status(200).json([deletedGame, { message: "deletion successful" }]);
   } catch (err) {
-    console.log(err.message);
-    res.status(500).json({ message: err.message });
+    if (res.statusCode == 200) {
+      res.status(500);
+    }
+    throw new Error(err.message);
   }
-};
+});
 
 module.exports = {
     getGames,

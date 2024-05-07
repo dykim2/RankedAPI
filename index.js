@@ -1,6 +1,8 @@
 const express = require('express');
 require("dotenv").config();
 const mongoose = require("mongoose");
+const errorMiddleware = require('./middleware/errorMiddleware')
+const cors = require('cors');
 
 const app = express();
 
@@ -15,7 +17,19 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use('/gameAPI', gameRoute);
 app.use('/charAPI', charRoute);
+app.use(cors());
+app.get('/', (req, res, next) => {
+  try{
+    res.send("Welcome to RankedAPI! If you need help, documentation is available.")
+  }
+  catch(err){
+    next(err);
+  }
+})
 
+
+
+app.use(errorMiddleware);
 mongoose
   .connect(MONGO_URL)
   .then(() => {
