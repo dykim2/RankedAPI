@@ -16,8 +16,7 @@ const postGames = asyncHandler(async (req, res) => {
 const getGames = asyncHandler(async (req, res) => {
   try {
     const gameResult = await game.find({});
-    throw new Error("bogus error will fix");
-    // res.status(200).json(gameResult); // gets all the games available on the database
+    res.status(200).json(gameResult); // gets all the games available on the database
   } catch (err) {
     if (res.statusCode == 200) {
       res.status(500);
