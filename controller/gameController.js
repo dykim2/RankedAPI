@@ -1,5 +1,6 @@
 const game = require('../models/gameModel.js')
 const asyncHandler = require("express-async-handler");
+const character = require('../models/characterModel.js');
 
 const postGames = asyncHandler(async (req, res) => {
   try {
@@ -47,7 +48,58 @@ const updateGame = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     // verify body is not empty
-    const result = await game.findByIdAndUpdate(id, req.body);
+    let updatedBody = req.body;
+    let newSchema = [];
+    if(typeof req.body.bans != "undefined"){
+      // verify characters
+      for(let i = 0; i < req.body.bans.length; i++){
+        const charInfo = await character.findById(req.body.bans[i]);
+        if(!charInfo){
+          res.status(404);
+          throw new Error(
+            `unable to locate a character with the name ${req.body.bans[i]}`
+          );
+        }
+        newSchema.push(charInfo);
+      }
+    }
+    if (newSchema.length != 0) {
+      updatedBody.bans = newSchema;
+      newSchema = [];
+    }
+    if(typeof req.body.pickst1  != "undefined"){
+      for (let i = 0; i < req.body.pickst1.length; i++) {
+        const charInfo = await character.findById(req.body.pickst1[i]);
+        if (!charInfo) {
+          res.status(404);
+          throw new Error(
+            `unable to locate a character with the name ${req.body.pickst1[i]}`
+          );
+        }
+        newSchema.push(charInfo);
+      }
+    }
+    if (newSchema.length != 0) {
+      updatedBody.pickst1 = newSchema;
+      newSchema = [];
+    }
+    if (typeof req.body.pickst2 != "undefined") {
+      for (let i = 0; i < req.body.pickst2.length; i++) {
+        const charInfo = await character.findById(req.body.pickst2[i]);
+        if (!charInfo) {
+          res.status(404);
+          throw new Error(
+            `unable to locate a character with the name ${req.body.pickst2[i]}`
+          );
+        }
+        newSchema.push(charInfo);
+      }
+    }
+    if (newSchema.length != 0) {
+      updatedBody.pickst2 = newSchema;
+      newSchema = [];
+    }
+    const result = await game.findByIdAndUpdate(id, updatedBody);
     if (!result) {
       res.status(404);
       throw new Error(`unable to locate a game with id ${id}`);
@@ -57,7 +109,7 @@ const updateGame = asyncHandler(async (req, res) => {
     if (res.statusCode == 200) {
       res.status(500);
     }
-    throw new Error(err.message);
+    throw new Error(err.message, err.stack);
   }
 });
 

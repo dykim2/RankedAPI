@@ -1,8 +1,6 @@
 const express = require('express');
 
 const router = express.Router();
-
-const character = require("../models/characterModel");
 const {addChar, getChar, getCharById, deleteChar} = require("../controller/characterController");
 
 // the api must be able to add characters, and remove them.

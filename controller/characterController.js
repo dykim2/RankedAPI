@@ -66,13 +66,13 @@ const deleteChar = asyncHandler(async (req, res) => {
 });
 const verify = (body) => {
   // if the requirements are not met, rejects the request
-  if (typeof body.name === undefined || body.name == "") {
+  if (typeof body.name === "undefined" || body.name == "") {
     return false;
   }
-  if (typeof body.element === undefined || body.element == "") {
+  if (typeof body.element === "undefined" || body.element == "") {
     return false;
   }
-  if (typeof body.description === undefined || body.description == "") {
+  if (typeof body.description === "undefined" || body.description == "") {
     return false;
   }
   /*

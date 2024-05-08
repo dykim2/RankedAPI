@@ -54,6 +54,8 @@ For all `PUT` and `POST` GameAPI requests, the following options are available t
     ]
 }
 ```
+Note that the ban and pick character names must start with an uppercase letter and all other letters are lowercase.
+
 `POST` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/ID`
 
 Create a new game with the given ID. An example body would look like this:
@@ -67,4 +69,14 @@ The above request will create a new game with `Team 1` and `Team 2` names as `Ge
 
 `PUT` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/ID`
 
-Updates the game 
+Updates the game information with the corresponding body information. An example body would look as follows:
+```json
+{
+    "division": "Open",
+    "players": [
+        "Player 1",
+        "Player 2"
+    ]
+}
+```
+The above request would change the 

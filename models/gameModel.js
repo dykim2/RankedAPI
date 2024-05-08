@@ -3,9 +3,11 @@ const characterSchema = require('./characterModel').schema;
 const gameSchema = mongoose.Schema(
   {
     _id: Number,
-    players: {
-      type: [String],
-      required: [true, "Please enter a list of players"],
+    playerst1: {
+      type: [String]
+    },
+    playerst2: {
+      type: [String]
     },
     division: {
       type: String,
@@ -13,8 +15,7 @@ const gameSchema = mongoose.Schema(
       required: false,
     },
     bans: {
-      type: [characterSchema],
-      required: [true, "Please enter the bans"],
+      type: [characterSchema]
     },
     bosses: {
       type: [String],
