@@ -16,6 +16,7 @@ const postGames = asyncHandler(async (req, res) => {
 const getGames = asyncHandler(async (req, res) => {
   try {
     const gameResult = await game.find({});
+    // check if gameResult is empty
     res.status(200).json(gameResult); // gets all the games available on the database
   } catch (err) {
     if (res.statusCode == 200) {
@@ -45,7 +46,6 @@ const findGame = asyncHandler(async (req, res) => {
 const updateGame = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(req.body);
     // verify body is not empty
     const result = await game.findByIdAndUpdate(id, req.body);
     if (!result) {
@@ -81,8 +81,6 @@ const updateTimes = asyncHandler(async(req, res) => {
             request = {
                 timest1: result
             }
-            console.log(request);
-            console.log(await game.findByIdAndUpdate(id, request));
             res.status(200).json({message: "Times updated successfully."});
         }
         else if(typeof body.timest2 !== undefined){
@@ -93,8 +91,6 @@ const updateTimes = asyncHandler(async(req, res) => {
             request = {
                 timest2: result,
             };
-            console.log(request);
-            console.log(await game.findByIdAndUpdate(id, request));
             res.status(200).json({ message: "Times updated successfully." });
         }
         else{

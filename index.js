@@ -26,9 +26,6 @@ app.get('/', (req, res, next) => {
     next(err);
   }
 })
-
-
-
 app.use(errorMiddleware);
 mongoose
   .connect(MONGO_URL)

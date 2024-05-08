@@ -1,3 +1,8 @@
 node_modules
 .env
 git-filter-repo
+.dockerignore
+Dockerfile
+fly.exe
+fly.toml
+flyctl.exe
