@@ -79,4 +79,15 @@ Updates the game information with the corresponding body information. An example
     ]
 }
 ```
-The above request would change the 
+The above request would change the `division` and `players` of the game with id ID to `Open` and `[Player 1, Player 2]` respective.
+
+`PUT` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/times/ID`
+
+Updates the time of the specified boss with the given time. This request has a very specific syntax, and not following it will result in an error. Specify a boss number in order of boss selection and a time.
+
+```json
+{
+    "timest1": [4, 13.32]
+}
+```
+updates the 5th boss of team 1's time to be 13.32 seconds.
