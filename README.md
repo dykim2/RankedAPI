@@ -12,6 +12,59 @@ All available GameAPI calls (https://rankedapi-late-cherry-618.fly.dev/GameAPI):
 | `PUT` | `/times/ID` | Updates the game with id ID to add the specified times. | 200, 400, 404 |
 | `DELETE` | `/ID` | Deletes a specific game. | 200, 404 |
 
-`POST` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/ID`
+Note that all API calls will return the game information as a JSON object on success and an error message on failure.
 
 ID is the internal ID of the game you want to update.
+For all `PUT` and `POST` GameAPI requests, the following options are available to be changed (all strings are fully editable):
+```json
+{
+    "players": [
+        "p1",
+        "p2",
+        "p3"
+    ],
+    "division": "Test Division",
+    "bosses": [
+        "Maguu Kenki",
+        "Jadeplume Terrorshroom",
+        "Aeonblight Drake"
+    ],
+    "result": "Team 1 wins!",
+    "team1": "",
+    "team2": "",
+    "timest1": [
+        0,
+        0,
+        0
+    ],
+    "bans": [
+        "Ban 1",
+        "Ban 2",
+        "Ban 3"
+    ],
+    "pickst1": [
+        "Aloy",
+        "Kaedehara Kazuha",
+        "Sangonomiya Kokomi"
+    ],
+    "pickst2": [
+        "Bennett",
+        "Ganyu",
+        "Lyney"
+    ]
+}
+```
+`POST` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/ID`
+
+Create a new game with the given ID. An example body would look like this:
+```json
+{
+    "team1": "Geo",
+    "team2": "Dendro"
+}
+```
+The above request will create a new game with `Team 1` and `Team 2` names as `Geo` and `Dendro` respectively.
+
+`PUT` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/ID`
+
+Updates the game 
