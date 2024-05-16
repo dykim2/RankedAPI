@@ -69,18 +69,10 @@ const verify = (body) => {
   if (typeof body.name === "undefined" || body.name == "") {
     return false;
   }
-  if (typeof body.element === "undefined" || body.element == "") {
-    return false;
-  }
-  if (typeof body.description === "undefined" || body.description == "") {
-    return false;
-  }
   /*
         list of requirements: 
         1) must have a name
-        2) must have an element
-        3) must have a description
-        4) must have an image link that matches the character name (i will upload them to github pages)
+        2) must have an image link that matches the character name (i will upload them to github pages)
     */
   return true;
 };

@@ -10,7 +10,6 @@ All available GameAPI calls (https://rankedapi-late-cherry-618.fly.dev/GameAPI):
 | `GET` | `/ID` | Obtains the information for the game with id ID. | 200, 404 |
 | `PUT` | `/ID` | Updates the game with id ID with the given body. | 200, 400, 404 |
 | `PUT` | `/times/ID` | Updates the game with id ID to add the specified times. | 200, 400, 404 |
-| `DELETE` | `/ID` | Deletes a specific game. | 200, 404 |
 
 Note that all API calls will return the game information as a JSON object on success and an error message on failure.
 
