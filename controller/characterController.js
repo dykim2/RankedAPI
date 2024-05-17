@@ -56,7 +56,7 @@ const deleteChar = asyncHandler(async (req, res) => {
       res.status(404);
       throw new Error(`unable to locate a character with id ${id}`);
     }
-    res.status(200).json([deletedGame, { message: "deletion successful" }]);
+    res.status(200).json([deletedChar, { message: "deletion successful" }]);
   } catch (err) {
     if (res.statusCode == 200) {
       res.status(500);
