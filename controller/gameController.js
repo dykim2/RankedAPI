@@ -44,7 +44,7 @@ const findGame = asyncHandler(async (req, res) => {
   }
 });
 
-const updateGame = asyncHandler(async (req, res) => {
+const updateGame = asyncHandler(async (req, res) => { // to update games, must submit id
   try {
     const { id } = req.params;
     // verify body is not empty
@@ -53,11 +53,12 @@ const updateGame = asyncHandler(async (req, res) => {
     if(typeof req.body.bans != "undefined"){
       // verify characters
       for(let i = 0; i < req.body.bans.length; i++){
-        const charInfo = await character.findById(req.body.bans[i]);
+        // find a way to convert id to name
+        const charInfo = await character.findById(req.body.bans[i]); // must be in the form of an id - characters will be placed in order
         if(!charInfo){
           res.status(404);
           throw new Error(
-            `unable to locate a character with the name ${req.body.bans[i]}`
+            `unable to locate a character with id ${req.body.bans[i]}`
           );
         }
         newSchema.push(charInfo);
@@ -73,7 +74,7 @@ const updateGame = asyncHandler(async (req, res) => {
         if (!charInfo) {
           res.status(404);
           throw new Error(
-            `unable to locate a character with the name ${req.body.pickst1[i]}`
+            `unable to locate a character with id ${req.body.pickst1[i]}`
           );
         }
         newSchema.push(charInfo);
@@ -89,7 +90,7 @@ const updateGame = asyncHandler(async (req, res) => {
         if (!charInfo) {
           res.status(404);
           throw new Error(
-            `unable to locate a character with the name ${req.body.pickst2[i]}`
+            `unable to locate a character with id ${req.body.pickst2[i]}`
           );
         }
         newSchema.push(charInfo);
@@ -104,7 +105,7 @@ const updateGame = asyncHandler(async (req, res) => {
       res.status(404);
       throw new Error(`unable to locate a game with id ${id}`);
     }
-    res.status(200).json(await game.findById(id));
+    res.status(200).json({message: "Game updated successfully!"});
   } catch (err) {
     if (res.statusCode == 200) {
       res.status(500);

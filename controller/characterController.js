@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 
 const addChar = asyncHandler(async (req, res) => {
   try {
-    if (!verify(req.body)) {
+    if (!verify(req.body, res)) {
       res.status(400);
       throw new Error("Please enter the necessary information in the body.");
     }
@@ -64,16 +64,42 @@ const deleteChar = asyncHandler(async (req, res) => {
     throw new Error(err.message);
   }
 });
-const verify = (body) => {
+const updateChar = asyncHandler(async (req, res) => {
+  try{
+    const {id} = req.params;
+    if (!verify(req.body, res)) {
+      res.status(400);
+      throw new Error("Please enter the necessary information in the body.");
+    }
+    const info = await character.findByIdAndUpdate(id, req.body);
+    res.status(200).json({message: "Character update successful!"});
+  } catch(err) {
+    if (res.statusCode == 200) {
+      res.status(500);
+    }
+    throw new Error(err.message);
+  }
+})
+const verify = (body, res) => {
   // if the requirements are not met, rejects the request
-  console.log(body.name+" name")
   if (typeof body.name === "undefined" || body.name == "") {
-    return false;
+    res.status(400);
+    throw new Error("Please enter a valid name.")
+  }
+  if(typeof body.element !== "undefined" && body.element != ""){
+    // verify the element is valid
+    const elements = ["anemo", "hydro", "dendro", "electro", "pyro", "cryo", "geo"]
+    let elem = body.element;
+    if(!elements.includes(elem)){
+      res.status(400);
+      throw new Error("Please specify a valid element. Make sure the element name is in lowercase only.")
+    }
   }
   /*
         list of requirements: 
         1) must have a name
-        2) must have an image link that matches the character name (i will upload them to github pages)
+        2) must have an image link that matches the character name (i will upload them)
+        3) must have an element so text can be colored accordingly on display
     */
   return true;
 };
@@ -81,5 +107,6 @@ module.exports = {
     addChar,
     getChar,
     getCharById,
-    deleteChar
+    deleteChar,
+    updateChar
 }

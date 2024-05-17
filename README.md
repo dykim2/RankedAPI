@@ -1,8 +1,9 @@
-# RankedAPI
+# RankedAPI 
+---
 
 All calls can be made to https://rankedapi-late-cherry-618.fly.dev/
 
-All available GameAPI calls (https://rankedapi-late-cherry-618.fly.dev/GameAPI): 
+All available **GameAPI** calls (https://rankedapi-late-cherry-618.fly.dev/GameAPI): 
 | Method | URL | Purpose | Return Codes |
 | --- | -- | --- | --- |
 | `POST`| `/` | Add a game to the API. | 200, 404 |
@@ -42,18 +43,18 @@ For all `PUT` and `POST` GameAPI requests, the following options are available t
         "Ban 3"
     ],
     "pickst1": [
-        "Aloy",
-        "Kaedehara Kazuha",
-        "Sangonomiya Kokomi"
+       1,
+       8,
+       22
     ],
     "pickst2": [
-        "Bennett",
-        "Ganyu",
-        "Lyney"
+        3,
+        5,
+        11
     ]
 }
 ```
-Note that the ban and pick character names must start with an uppercase letter and all other letters are lowercase.
+The IDs of characters start from 0 and are categorized by release version then alphabetically, with 0 being Amber and 80 being Arlecchino.
 
 `POST` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/ID`
 
@@ -90,3 +91,12 @@ Updates the time of the specified boss with the given time. This request has a v
 }
 ```
 updates the 5th boss of team 1's time to be 13.32 seconds.
+
+All available **CharacterAPI** calls (https://rankedapi-late-cherry-618.fly.dev/CharAPI): 
+| Method | URL | Purpose | Return Codes |
+| --- | -- | --- | --- |
+| `POST`| `/` | Add a character to the API. | 200, 400, 500|
+| `GET` | `/`| Obtain all characters. | 200, 500|
+| `GET` | `/ID` | Obtains the information for the character with id ID. | 200, 400, 404, 500 |
+| `PUT` | `/ID` | Updates the character with id ID with the given body. | 200, 400, 404, 500 |
+| `DELETE` | `/ID` | Removes the given character. Please do not do this without permission. | 200, 400, 500 |

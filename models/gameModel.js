@@ -42,12 +42,10 @@ const gameSchema = mongoose.Schema(
       default: [0, 0, 0, 0, 0, 0, 0]
     },
     pickst1: {
-        type: [characterSchema],
-        required: [true, "Please enter team 1's picks"]
+        type: [characterSchema]
     },
     pickst2: {
-        type: [characterSchema],
-        required: [true, "Please enter team 2's picks"]
+        type: [characterSchema]
     }
   },
   {

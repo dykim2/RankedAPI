@@ -8,6 +8,10 @@ const characterSchema = mongoose.Schema({
   image: {
     type: String,
     required: true,
+  },
+  element: {
+    type: String,
+    required: true
   }
 });
 
