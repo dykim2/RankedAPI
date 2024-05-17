@@ -66,6 +66,7 @@ const deleteChar = asyncHandler(async (req, res) => {
 });
 const verify = (body) => {
   // if the requirements are not met, rejects the request
+  console.log(body.name+" name")
   if (typeof body.name === "undefined" || body.name == "") {
     return false;
   }
