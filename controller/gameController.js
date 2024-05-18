@@ -117,73 +117,74 @@ const updateGame = asyncHandler(async (req, res) => { // to update games, must s
 // update one boss' time per call
 const updateTimes = asyncHandler(async(req, res) => {
     try {
-        const {id} = req.params;
-        const body = req.body;
-        let index = 0;
-        const gameResult = await game.findById(id);
-        if(!gameResult){
-            res.status(404);
-            throw new Error(`unable to locate a game with id ${id}`);
+      const {id} = req.params;
+      const body = req.body;
+      let index = 0;
+      const gameResult = await game.findById(id);
+      if(!gameResult){
+          res.status(404);
+          throw new Error(`unable to locate a game with id ${id}`);
+      }
+      let result = null;
+      let request = "";
+      // simplify this code down
+      if(typeof body.timest1 !== "undefined"){
+        if(body.timest1.length != 2){
+          res.status(400);
+          throw new Error("Unable to process request. Please ensure your array size is accurate.")
         }
-        let result = null;
-        let request = "";
-        if(typeof body.timest1 !== "undefined"){
-          if(body.timest1.length != 2){
-            res.status(400);
-            throw new Error("Unable to process request. Please ensure your array size is accurate.")
-          }
-          if(Number.isInteger(body.timest1[0]) == false){
-            res.status(400);
-            throw new Error(
-              "Unable to process request. Please ensure your boss choice is accurate."
-            );
-          }
-            index = body.timest1[1];
-            result = gameResult.timest1;
-            if(result.length <= index){
-              res.status(400);
-              throw new Error(
-                "Unable to process request. Please ensure your boss choices are accurate."
-              );
-            }
-            result[index] = body.timest1[0];
-            request = JSON.stringify({
-                timest1: result
-            })
-          await game.findByIdAndUpdate(id, request)
-          res.status(200).json({message: "Times updated successfully."});
+        if(Number.isInteger(body.timest1[0]) == false){
+          res.status(400);
+          throw new Error(
+            "Unable to process request. Please ensure your boss choice is accurate."
+          );
         }
-        else if(typeof body.timest2 !== "undefined"){
-          if (body.timest2.length != 2) {
+          index = body.timest1[1];
+          result = gameResult.timest1;
+          if(result.length <= index){
             res.status(400);
             throw new Error(
-              "Unable to process request. Please ensure your array size is accurate."
+              "Unable to process request. Please ensure your boss choices are accurate."
             );
           }
-          if (Number.isInteger(body.timest2[0]) == false) {
+          result[index] = body.timest1[0];
+          request = JSON.stringify({
+              timest1: result
+          })
+        await game.findByIdAndUpdate(id, request)
+        res.status(200).json({message: "Times updated successfully."});
+      }
+      else if(typeof body.timest2 !== "undefined"){
+        if (body.timest2.length != 2) {
+          res.status(400);
+          throw new Error(
+            "Unable to process request. Please ensure your array size is accurate."
+          );
+        }
+        if (Number.isInteger(body.timest2[0]) == false) {
+          res.status(400);
+          throw new Error(
+            "Unable to process request. Please ensure your boss choice is accurate."
+          );
+        }
+          index = body.timest2[1];
+          result = gameResult.timest2;
+          if (result.length <= index) {
             res.status(400);
             throw new Error(
-              "Unable to process request. Please ensure your boss choice is accurate."
+              "Unable to process request. Please ensure your boss choices are accurate."
             );
           }
-            index = body.timest2[1];
-            result = gameResult.timest2;
-            if (result.length <= index) {
-              res.status(400);
-              throw new Error(
-                "Unable to process request. Please ensure your boss choices are accurate."
-              );
-            }
-            result[index] = body.timest2[0];
-            request = JSON.stringify({
-                timest2: result,
-            });
-            await game.findByIdAndUpdate(id, request);
-            res.status(200).json({ message: "Times updated successfully." });
-        }
-        else{
-            res.status(400).json({message: "Please choose either team 1 or team 2 to update."})
-        }
+          result[index] = body.timest2[0];
+          request = JSON.stringify({
+              timest2: result,
+          });
+          await game.findByIdAndUpdate(id, request);
+          res.status(200).json({ message: "Times updated successfully." });
+      }
+      else{
+          res.status(400).json({message: "Please choose either team 1 or team 2 to update."})
+      }
         
         // 
     } catch (err) {

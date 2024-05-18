@@ -7,7 +7,7 @@ const {addChar, getChar, getCharById, deleteChar, updateChar} = require("../cont
 router.post("/add", addChar);
 router.get("/", getChar);
 router.get("/:id", getCharById)
-router.put("/:id", updateChar)
-router.delete("/delete/:id", deleteChar)
+// router.put("/:id", updateChar)
+// router.delete("/delete/:id", deleteChar)
 
 module.exports = router;

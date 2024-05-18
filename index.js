@@ -15,9 +15,14 @@ const gameRoute = require('./routes/gameRoute');
 const charRoute = require('./routes/characterRoute')
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+const corsOptions = {
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
 app.use('/gameAPI', gameRoute);
 app.use('/charAPI', charRoute);
-app.use(cors());
 app.get('/', (req, res, next) => {
   try{
     res.send("Welcome to RankedAPI! If you need help, documentation is available.")
@@ -37,13 +42,3 @@ mongoose
     console.log(err);
   });
 
-/*
- request structure:
- {
-    players: []
-
- }
-
- notes: 
- for consistency, use the same player name
-*/

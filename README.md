@@ -12,7 +12,7 @@ All available **GameAPI** calls (https://rankedapi-late-cherry-618.fly.dev/GameA
 | `PUT` | `/ID` | Updates the game with id ID with the given body. | 200, 400, 404 |
 | `PUT` | `/times/ID` | Updates the game with id ID to add the specified times. | 200, 400, 404 |
 
-Note that all API calls will return the game information as a JSON object on success and an error message on failure.
+Note that all API calls will return the game information as a JSON object on success and an error message on failure. Only use the GET calls unless you know what you are doing.
 
 ID is the internal ID of the game you want to update.
 For all `PUT` and `POST` GameAPI requests, the following options are available to be changed (all strings are fully editable):
@@ -100,3 +100,32 @@ All available **CharacterAPI** calls (https://rankedapi-late-cherry-618.fly.dev/
 | `GET` | `/ID` | Obtains the information for the character with id ID. | 200, 400, 404, 500 |
 | `PUT` | `/ID` | Updates the character with id ID with the given body. | 200, 400, 404, 500 |
 | `DELETE` | `/ID` | Removes the given character. Please do not do this without permission. | 200, 400, 500 |
+
+`POST` `https://rankedapi-late-cherry-618.fly.dev/CharAPi/add`
+
+Adds a character to the API. To add a character, send a request with a body following this format:
+```json
+{
+    "_id": ID,
+    "name": "Character name",
+    "element": "element",
+    "image": "image link"
+}
+```
+`image` must be a permanant link to the character infographic and `element` **must** be one of the following (fully lowercase): 
+```
+pyro, cryo, dendro, electro, hydro, geo, anemo, variable
+``` 
+Variable should ***only*** be for the Traveler, no one else. The 81 character IDs are from 0 to 80, with characters sorted by release version then alphabetically (Amber is 0, Arlecchino is 80). Entering an invalid ID will return a server error. 
+
+`GET` `https://rankedapi-late-cherry-618.fly.dev/CharAPi/`
+
+Gets a list of all characters and their corresponding elements and image links. 
+
+`GET` `https://rankedapi-late-cherry-618.fly.dev/CharAPi/ID`
+
+Gets a specific character with the given ID's information. 
+
+`PUT` `https://rankedapi-late-cherry-618.fly.dev/CharAPi/ID`
+
+Updates the character with the given ID's information. Requires a body with some of the following information: 
