@@ -10,10 +10,9 @@ router.post("/", postGames);
 router.get("/", getGames);
 router.get("/:id", findGame);
 // edit game as a whole
-// router.put("/:id", jsonParser, updateGame);
+router.put("/:id", jsonParser, updateGame);
 // edit part of a game (namely, the times for each team)
-// router.put("/times/:id", jsonParser, updateTimes);
-
-// router.delete("/:id", deleteGame);
+router.put("/times/:id", jsonParser, updateTimes);
+router.delete("/:id", deleteGame);
 
 module.exports = router;
