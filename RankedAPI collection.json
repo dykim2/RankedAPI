@@ -1,0 +1,366 @@
+{
+	"info": {
+		"_postman_id": "3a5ff940-a5fd-4cd9-904c-53a39baaf516",
+		"name": "RankedAPI",
+		"description": "Example calls for the Ranked API. The API holds character and game information for GENSHIN RANKED.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33487534"
+	},
+	"item": [
+		{
+			"name": "GameAPI",
+			"item": [
+				{
+					"name": "Adding a new game",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\": 5,\r\n    \"playerst1\": [\"one\", \"two\", \"four\"],\r\n    \"playerst2\": [\"five\", \"six\", \"seven\"],\r\n    \"division\": \"Green\",\r\n    \"bosses\": [\"Maguu Kenki\", \"Aeonblight Drake\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"gameAPI",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtaining a specific game",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/gameAPI/1121",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"gameAPI",
+								"1121"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all games",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"gameAPI",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get invalid game",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/32",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"gameAPI",
+								"32"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove a game",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/1000",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"gameAPI",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update times",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"timest1\": [25.57, 4]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/times/1000",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"gameAPI",
+								"times",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update all game info",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"division\": \"Green\",\r\n    \"pickst1\": [0,1],\r\n    \"bans\": [2]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/5",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"gameAPI",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Example calls for operations to the game API section of the RankedAPI."
+		},
+		{
+			"name": "CharAPI",
+			"item": [
+				{
+					"name": "Get specific character",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Arlecchino\",\r\n  \"image\": \"image link\",\r\n  \"element\": \"Pyro\",\r\n  \"role\": \"Carry\",\r\n  \"description\": \"A heavy hitter of a pyro dps who cannot heal herself in battle. Dodging is really important on her to keep her bond of life active.\",\r\n  \"difficulty\": 3,\r\n  \"limits\": [0,1],\r\n  \"restrictions\": [\"no 5* or Battle Pass weapons\", \"no 5* or Battle Pass weapons at C1\"],\r\n  \"_id\": \"Arlecchino\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"charAPI",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all characters",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Arlecchino\",\r\n  \"image\": \"image link\",\r\n  \"element\": \"Pyro\",\r\n  \"role\": \"Carry\",\r\n  \"description\": \"A heavy hitter of a pyro dps who cannot heal herself in battle. Dodging is really important on her to keep her bond of life active.\",\r\n  \"difficulty\": 3,\r\n  \"limits\": [0,1],\r\n  \"restrictions\": [\"no 5* or Battle Pass weapons\", \"no 5* or Battle Pass weapons at C1\"],\r\n  \"_id\": \"Arlecchino\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"charAPI",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a character",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"_id\": 1,\r\n  \"name\": \"Barbara\",\r\n  \"element\": \"green\",\r\n  \"image\": \"image link\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/add",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"charAPI",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove a character",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/delete/1",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"charAPI",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update character info",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Hu Tao\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/28",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"charAPI",
+								"28"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Example calls for operations to the character API section of the RankedAPI."
+		}
+	]
+}
