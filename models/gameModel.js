@@ -4,26 +4,26 @@ const gameSchema = mongoose.Schema(
   {
     _id: Number,
     playerst1: {
-      type: [String]
+      type: [String],
     },
     playerst2: {
-      type: [String]
+      type: [String],
     },
     division: {
       type: String,
-      default: "Open",
-      required: false,
+      default: "Advanced",
     },
     bans: {
-      type: [characterSchema]
+      type: [characterSchema],
+      default: [],
     },
     bosses: {
       type: [String],
-      required: true,
+      default: ["Aeonblight Drake"],
     },
     result: {
       type: String,
-      default: "Draw",
+      default: "Draw", // can be "Setup", "Progress", and "Finish", or a winning team (1 or 2, in format of a string)
     },
     team1: {
       type: String,
@@ -35,17 +35,19 @@ const gameSchema = mongoose.Schema(
     },
     timest1: {
       type: [Number],
-      default: [0, 0, 0, 0, 0, 0, 0]
+      default: [0, 0, 0, 0, 0, 0, 0],
     },
     timest2: {
       type: [Number],
-      default: [0, 0, 0, 0, 0, 0, 0]
+      default: [0, 0, 0, 0, 0, 0, 0],
     },
     pickst1: {
-        type: [characterSchema]
+      type: [characterSchema],
+      default: [],
     },
     pickst2: {
-        type: [characterSchema]
+      type: [characterSchema],
+      default: [],
     }
   },
   {

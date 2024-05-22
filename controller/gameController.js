@@ -115,6 +115,7 @@ const updateGame = asyncHandler(async (req, res) => { // to update games, must s
 });
 
 // update one boss' time per call
+// will deprecate and remove soon, replace the code with more organized code
 const updateTimes = asyncHandler(async(req, res) => {
     try {
       const {id} = req.params;

@@ -17,36 +17,46 @@ ID is the internal ID of the game you want to update.
 For all `PUT` and `POST` GameAPI requests, the following options are available to be changed (all strings are fully editable):
 ```json
 {
-    "players": [
+    playerst1: [
         "p1",
         "p2",
         "p3"
     ],
-    "division": "Test Division",
-    "bosses": [
+    playerst2: [
+        "p4",
+        "p5",
+        "p6"
+    ],
+    division: "Test Division",
+    bosses: [
         "Maguu Kenki",
         "Jadeplume Terrorshroom",
         "Aeonblight Drake"
     ],
-    "result": "Team 1 wins!",
-    "team1": "",
-    "team2": "",
-    "timest1": [
+    result: "Team 1 wins!",
+    team1: "Team 1 Name",
+    team2: "Team 2 Name",
+    timest1: [
         0,
         0,
         0
     ],
-    "bans": [
+    timest2: [
+        0,
+        0,
+        0
+    ],
+    bans: [
         "Ban 1",
         "Ban 2",
         "Ban 3"
     ],
-    "pickst1": [
+    pickst1: [
        1,
        8,
        22
     ],
-    "pickst2": [
+    pickst2: [
         3,
         5,
         11
