@@ -23,7 +23,7 @@ const gameSchema = mongoose.Schema(
     },
     result: {
       type: String,
-      default: "Draw", // can be "Setup", "Progress", and "Finish", or a winning team (1 or 2, in format of a string)
+      default: "Waiting", // can be "Waiting, Setup", "Progress", and "Finish", or a winning team (1 or 2, in format of a string)
     },
     team1: {
       type: String,
@@ -57,9 +57,3 @@ const gameSchema = mongoose.Schema(
 
 const game = mongoose.model("Game", gameSchema)
 module.exports = game;
-
-/*
-    basic structure: 
-        - what does a gameschema need?
-        - i'll implement to start by adding characters
-*/

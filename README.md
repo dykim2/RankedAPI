@@ -9,7 +9,6 @@ All calls can be made to https://rankedapi-late-cherry-618.fly.dev/
 | `GET` | `/`| Obtain all games. | 200, 400, 404 |
 | `GET` | `/ID` | Obtains the information for the game with id ID. | 200, 404 |
 | `PUT` | `/ID` | Updates the game with id ID with the given body. | 200, 400, 404 |
-| `PUT` | `/times/ID` | Updates the game with id ID to add the specified times. | 200, 400, 404 |
 
 Note that all API calls will return the game information as a JSON object on success and an error message on failure. Only use the GET calls unless you know what you are doing.
 
@@ -17,46 +16,46 @@ ID is the internal ID of the game you want to update.
 For all `PUT` and `POST` GameAPI requests, the following options are available to be changed (all strings are fully editable):
 ```json
 {
-    playerst1: [
+    "playerst1": [
         "p1",
         "p2",
         "p3"
     ],
-    playerst2: [
+    "playerst2": [
         "p4",
         "p5",
         "p6"
     ],
-    division: "Test Division",
-    bosses: [
+    "division": "Test Division",
+    "bosses": [
         "Maguu Kenki",
         "Jadeplume Terrorshroom",
         "Aeonblight Drake"
     ],
-    result: "Team 1 wins!",
-    team1: "Team 1 Name",
-    team2: "Team 2 Name",
-    timest1: [
+    "result": "Team 1 wins!",
+    "team1": "Team 1 Name",
+    "team2": "Team 2 Name",
+    "timest1": [
         0,
         0,
         0
     ],
-    timest2: [
+    "timest2": [
         0,
         0,
         0
     ],
-    bans: [
+    "bans": [
         "Ban 1",
         "Ban 2",
         "Ban 3"
     ],
-    pickst1: [
+    "pickst1": [
        1,
        8,
        22
     ],
-    pickst2: [
+    "pickst2": [
         3,
         5,
         11
@@ -98,17 +97,6 @@ Updates the game information with the corresponding body information. An example
 ```
 The above request would change the `division` and `players` of the game with id ID to `Open` and `[Player 1, Player 2]` respective.
 
-### `PUT` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/times/ID`
-
-Updates the time of the specified boss with the given time. This request has a very specific syntax, and not following it will result in an error. Specify a boss number in order of boss selection and a time.
-
-```json
-{
-    "timest1": [4, 13.32]
-}
-```
-updates the 5th boss of team 1's time to be 13.32 seconds.
-
 ## All available **CharacterAPI** calls (https://rankedapi-late-cherry-618.fly.dev/CharAPI): 
 | Method | URL | Purpose | Return Codes |
 | --- | -- | --- | --- |
@@ -146,7 +134,7 @@ Gets a specific character with the given ID's information.
 ### `PUT` `https://rankedapi-late-cherry-618.fly.dev/CharAPi/ID`
 
 Updates the character with the given ID's information. Requires a body with any amount of the following information: 
-```
+```json
 {
     "name": "Character name",
     "element": "element",

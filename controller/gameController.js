@@ -30,7 +30,7 @@ const getGames = asyncHandler(async (req, res) => {
 const findGame = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
-    const gameResult = await game.findById(id);
+    const gameResult = await game.findById(id).lean();
     if(!gameResult){
        res.status(404);
        throw new Error(`unable to locate a game with id ${id}`);
@@ -38,6 +38,34 @@ const findGame = asyncHandler(async (req, res) => {
     res.status(200).json(gameResult);
   } catch (err) {
     if (res.statusCode == 200) { // if an error happened, can't return the OK status code
+      res.status(500);
+    }
+    throw new Error(err.message);
+  }
+});
+
+const findActiveGames = asyncHandler(async (req, res) => {
+  try{
+    // find all games with the condition 
+    const info = await game
+      .find(
+        {
+          $or: [
+            { result: "waiting" },
+            { result: "setup" },
+            { result: "progress" }
+          ],
+        },
+        "_id result"
+      )
+      .exec();
+      console.log(JSON.stringify(info));
+      res.status(200).json(info);
+      return true;
+  } 
+  catch(err){
+    if (res.statusCode == 200) {
+      // if an error happened, can't return the OK status code
       res.status(500);
     }
     throw new Error(err.message);
@@ -115,7 +143,7 @@ const updateGame = asyncHandler(async (req, res) => { // to update games, must s
 });
 
 // update one boss' time per call
-// will deprecate and remove soon, replace the code with more organized code
+/*
 const updateTimes = asyncHandler(async(req, res) => {
     try {
       const {id} = req.params;
@@ -195,6 +223,7 @@ const updateTimes = asyncHandler(async(req, res) => {
         throw new Error(err.message);
     }
 });
+*/
 
 const deleteGame = asyncHandler(async (req, res) => {
   try {
@@ -218,6 +247,7 @@ module.exports = {
     postGames,
     findGame,
     updateGame,
-    updateTimes,
+    // updateTimes,
+    findActiveGames,
     deleteGame
 }

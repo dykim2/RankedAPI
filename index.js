@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 const corsOptions = {
   origin: "*",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  methods: "GET,PUT,POST,DELETE",
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use(cors(corsOptions));
@@ -35,8 +35,7 @@ app.use(errorMiddleware);
 mongoose
   .connect(MONGO_URL)
   .then(() => {
-    console.log("connected to the mongodb database");
-    app.listen(PORT, () => console.log(`alive on http://localhost:${PORT}`));
+    app.listen(PORT, () => console.log(`connected!`));
   })
   .catch((err) => {
     console.log(err);
