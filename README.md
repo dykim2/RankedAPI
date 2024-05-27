@@ -6,8 +6,9 @@ All calls can be made to https://rankedapi-late-cherry-618.fly.dev/
 | Method | URL | Purpose | Return Codes |
 | --- | -- | --- | --- |
 | `POST`| `/` | Add a game to the API. | 200, 404 |
-| `GET` | `/`| Obtain all games. | 200, 400, 404 |
-| `GET` | `/ID` | Obtains the information for the game with id ID. | 200, 404 |
+| `GET` | `/all`| Obtain all games. | 200, 400, 404 |
+| `GET` | `/find/ID` | Obtains the information for the game with id ID. | 200, 404 |
+| `GET` | `/active` | Obtains the IDs and active status of games currently in progress. | 200, 404 |
 | `PUT` | `/ID` | Updates the game with id ID with the given body. | 200, 400, 404 |
 
 Note that all API calls will return the game information as a JSON object on success and an error message on failure. Only use the GET calls unless you know what you are doing.
@@ -33,6 +34,7 @@ For all `PUT` and `POST` GameAPI requests, the following options are available t
         "Aeonblight Drake"
     ],
     "result": "Team 1 wins!",
+    "connected": [0,0,0,0],
     "team1": "Team 1 Name",
     "team2": "Team 2 Name",
     "timest1": [
@@ -62,7 +64,7 @@ For all `PUT` and `POST` GameAPI requests, the following options are available t
     ]
 }
 ```
-The IDs of characters start from 0 and are categorized by release version then alphabetically, with 0 being Amber and 80 being Arlecchino.
+The IDs of characters start from 0 and are categorized by release version then alphabetically, with 0 being Amber and 83 being Sigewinne.
 
 ### `POST` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/ID`
 
@@ -96,6 +98,8 @@ Updates the game information with the corresponding body information. An example
 }
 ```
 The above request would change the `division` and `players` of the game with id ID to `Open` and `[Player 1, Player 2]` respective.
+
+### `PUT` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/ID`
 
 ## All available **CharacterAPI** calls (https://rankedapi-late-cherry-618.fly.dev/CharAPI): 
 | Method | URL | Purpose | Return Codes |

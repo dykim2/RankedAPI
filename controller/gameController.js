@@ -56,12 +56,10 @@ const findActiveGames = asyncHandler(async (req, res) => {
             { result: "progress" }
           ],
         },
-        "_id result"
+        "_id result connected"
       )
       .exec();
-      console.log(JSON.stringify(info));
-      res.status(200).json(info);
-      return true;
+    res.status(200).json(info);
   } 
   catch(err){
     if (res.statusCode == 200) {
@@ -71,6 +69,21 @@ const findActiveGames = asyncHandler(async (req, res) => {
     throw new Error(err.message);
   }
 });
+
+const findLatest = asyncHandler(async(req, res) => {
+  try{
+    const info = await game.findOne().sort({createdAt: -1}).exec();
+    console.log(info);
+    res.status(200).json(info);
+  }
+  catch(err){
+    if (res.statusCode == 200) {
+      // if an error happened, can't return the OK status code
+      res.status(500);
+    }
+    throw new Error(err.message);
+  }
+})
 
 const updateGame = asyncHandler(async (req, res) => { // to update games, must submit id
   try {
@@ -141,6 +154,53 @@ const updateGame = asyncHandler(async (req, res) => { // to update games, must s
     throw new Error(err.message, err.stack);
   }
 });
+
+const updatePlayers = asyncHandler(async(req, res)=> {
+    // find a game, check the players, increment the existing values
+  const {id} = req.params;
+  const result = await game.findById(id);
+  switch(req.body.player){
+    // verify the player count is valid
+    // if it is not, returns a message saying it is invalid
+    case "1":
+      if(result.connected[0] >= 1){ // more than one person connected
+        res.status(409).json({ error: "Someone else has already selected player 1! Please refresh and try again." });
+        return;
+      }
+      result.connected[0]++;
+      break;
+    case "2":
+      if (result.connected[1] >= 1) {
+        // more than one person connected
+        res
+          .status(409)
+          .json({
+            message:
+              "Someone else has already selected player 2! Please refresh and try again.",
+          });
+          return;
+      }
+      result.connected[1]++;
+      break;
+    case "ref":
+      if (result.connected[2] >= 2) {
+      // more than one person connected
+      res
+        .status(409)
+        .json({
+          message:
+            "Two people have already selected themselves to be refs! Please refresh and try again.",
+        });
+        return;
+    }
+      result.connected[2]++;
+      break;
+    default:
+      res.status(400).json({message: "Please enter a valid player!"});
+      return;
+  }
+  res.status(200).json({message: "Player selection success!"})
+})
 
 // update one boss' time per call
 /*
@@ -246,8 +306,10 @@ module.exports = {
     getGames,
     postGames,
     findGame,
+    findLatest,
     updateGame,
     // updateTimes,
+    updatePlayers,
     findActiveGames,
     deleteGame
 }
