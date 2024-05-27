@@ -23,11 +23,11 @@ const gameSchema = mongoose.Schema(
     },
     result: {
       type: String,
-      default: "Waiting", // can be "Waiting, Setup", "Progress", and "Finish", or a winning team (1 or 2, in format of a string)
+      default: "waiting", // can be "waiting, setup", "progress", and "finish", or a winning team (1 or 2, in format of a string)
     },
     connected: {
       type: [Number],
-      default: [0,0,0,0] // captain 1, captain 2, ref 1, ref 2 connected?
+      default: [0,0,0] // captain 1, captain 2, ref 1, ref 2 connected?
     },
     team1: {
       type: String,

@@ -4,11 +4,31 @@ const character = require('../models/characterModel.js');
 
 const postGames = asyncHandler(async (req, res) => {
   try {
-    const gameResult = await game.create(req.body);
-    res.status(200).json(gameResult);
+    // check for error
+    let gameResult = {};
+    if(req.body._id == -1){
+      gameResult = -1; // specifically set gameResult to create a new game
+    }
+    else{
+      gameResult = await game.findById(req.body._id).lean();
+    }
+    if(gameResult){
+      // will set id to be the next one
+      let val = await latest();
+      if(val != null){
+        req.body._id = val._id + 1;
+      }
+      else{
+        throw new Error("this should not happen. What are you doing that there is a game but no latest game?");
+      }
+    }
+    const newGame = await game.create(req.body);
+    // check if game exists or if id is -1, which then it creates based on the latest game
+
+    res.status(200).json(newGame);
   } catch (err) {
     if (res.statusCode == 200) {
-      res.status(500);
+      res.status(400);
     }
     throw new Error(err.message);
   }
@@ -52,6 +72,7 @@ const findActiveGames = asyncHandler(async (req, res) => {
         {
           $or: [
             { result: "waiting" },
+            { result: "Waiting" }, 
             { result: "setup" },
             { result: "progress" }
           ],
@@ -72,9 +93,14 @@ const findActiveGames = asyncHandler(async (req, res) => {
 
 const findLatest = asyncHandler(async(req, res) => {
   try{
-    const info = await game.findOne().sort({createdAt: -1}).exec();
-    console.log(info);
-    res.status(200).json(info);
+    const info = await latest();
+    if(info == null){
+      res.status(404).json({message: "There are no games currently available. Start with game 0!"})
+    }
+    else{
+      res.status(200).json({message: "Search success!", id: info._id});
+    }
+    
   }
   catch(err){
     if (res.statusCode == 200) {
@@ -84,6 +110,10 @@ const findLatest = asyncHandler(async(req, res) => {
     throw new Error(err.message);
   }
 })
+
+const latest = async() => {
+  return await game.findOne().sort({ createdAt: -1 }).exec();
+}
 
 const updateGame = asyncHandler(async (req, res) => { // to update games, must submit id
   try {
@@ -199,6 +229,7 @@ const updatePlayers = asyncHandler(async(req, res)=> {
       res.status(400).json({message: "Please enter a valid player!"});
       return;
   }
+  await result.save();
   res.status(200).json({message: "Player selection success!"})
 })
 

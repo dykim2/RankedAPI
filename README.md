@@ -9,9 +9,14 @@ All calls can be made to https://rankedapi-late-cherry-618.fly.dev/
 | `GET` | `/all`| Obtain all games. | 200, 400, 404 |
 | `GET` | `/find/ID` | Obtains the information for the game with id ID. | 200, 404 |
 | `GET` | `/active` | Obtains the IDs and active status of games currently in progress. | 200, 404 |
-| `PUT` | `/ID` | Updates the game with id ID with the given body. | 200, 400, 404 |
+| `GET` | `/latest` | Obtains the ID of the game most recently created . | 200, 404 |
+| `PUT` | `/game/ID` | Updates the game with id ID with the given body. | 200, 400, 404 |
+| `PUT` | `/players/ID` | Updates the player connected information of game with id ID with the set information. | 200, 400, 404 |
+| `DELETE` | `/ID` | Updates the game with id ID with the given body. | 200, 400, 404 |
 
 Note that all API calls will return the game information as a JSON object on success and an error message on failure. Only use the GET calls unless you know what you are doing.
+
+All requests with a body require a `"Content-Type": "application/json"` header
 
 ID is the internal ID of the game you want to update.
 For all `PUT` and `POST` GameAPI requests, the following options are available to be changed (all strings are fully editable):
@@ -75,17 +80,25 @@ Create a new game with the given ID. An example body would look like this:
     "team2": "Dendro"
 }
 ```
-The above request will create a new game with `Team 1` and `Team 2` names as `Geo` and `Dendro` respectively.
+The above request will create a new game with `Team 1` and `Team 2` names as `Geo` and `Dendro` respectively. If a game with the given id already exists, the APi will create a game with an ID of the newest game + 1.
 
-### `GET` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/`
+### `GET` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/all`
 
 Obtains the game information of every game played.
 
-### `GET` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/ID`
+### `GET` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/find/ID`
 
 Obtains the game information of the game with the specified ID.
 
-### `PUT` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/ID`
+### `GET` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/active`
+
+Obtains a list of every game that is currently active and not finished. Returns their ids, results, and connected status. 
+
+### `GET` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/latest/ID`
+
+Obtains the id of the most recently created game in the form of a JSON string.
+
+### `PUT` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/game/ID`
 
 Updates the game information with the corresponding body information. An example body would look as follows:
 ```json
@@ -99,7 +112,20 @@ Updates the game information with the corresponding body information. An example
 ```
 The above request would change the `division` and `players` of the game with id ID to `Open` and `[Player 1, Player 2]` respective.
 
-### `PUT` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/ID`
+### `PUT` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/players/ID`
+
+Updates the connected player information for the game with id ID. Request should be in the following format:
+
+```json
+{
+    "player": "<1/2/ref>"
+}
+```
+`player` can be one of "1", "2", or "ref". If not, the server will throw an error. 
+
+### `DELETE` `https://rankedapi-late-cherry-618.fly.dev/GameAPI/ID`
+
+Deletes the specified game.
 
 ## All available **CharacterAPI** calls (https://rankedapi-late-cherry-618.fly.dev/CharAPI): 
 | Method | URL | Purpose | Return Codes |
