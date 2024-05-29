@@ -136,7 +136,7 @@ Deletes the specified game.
 | `PUT` | `/ID` | Updates the character with id ID with the given body. | 200, 400, 404, 500 |
 | `DELETE` | `/ID` | Removes the character with the given ID from the APi. | 200, 400, 404, 500 |
 
-### `POST` `https://rankedapi-late-cherry-618.fly.dev/CharAPi/add`
+### `POST` `https://rankedapi-late-cherry-618.fly.dev/CharAPI/add`
 
 Adds a character to the API. To add a character, send a request with a body following this format:
 ```json
@@ -144,36 +144,38 @@ Adds a character to the API. To add a character, send a request with a body foll
     "_id": ID,
     "name": "Character name",
     "element": "element",
-    "image": "image link"
+    "image": "image link",
+    "icon": "icon link"
 }
 ```
 `_id` and `name` are **required**. `image` must be a permanant link to the character infographic and `element` **must** be one of the following (fully lowercase): 
 ```
 pyro, cryo, dendro, electro, hydro, geo, anemo, variable
 ``` 
-Variable should ***only*** be for the Traveler, no one else. The 81 character IDs are from 0 to 80, with characters sorted by release version then alphabetically (Amber is 0, Arlecchino is 80). Entering an invalid ID will return a server error. 
+Variable should ***only*** be for the Traveler, no one else. The 84 character IDs are from 0 to 83, with characters sorted by release version then alphabetically (Amber is 0, Sigewinne is 80). Entering an invalid ID will return a server error. 
 
-### `GET` `https://rankedapi-late-cherry-618.fly.dev/CharAPi/`
+### `GET` `https://rankedapi-late-cherry-618.fly.dev/CharAPI/`
 
 Gets a list of all characters and their corresponding elements and image links. 
 
-### `GET` `https://rankedapi-late-cherry-618.fly.dev/CharAPi/ID`
+### `GET` `https://rankedapi-late-cherry-618.fly.dev/CharAPI/ID`
 
 Gets a specific character with the given ID's information. 
 
-### `PUT` `https://rankedapi-late-cherry-618.fly.dev/CharAPi/ID`
+### `PUT` `https://rankedapi-late-cherry-618.fly.dev/CharAPI/ID`
 
 Updates the character with the given ID's information. Requires a body with any amount of the following information: 
 ```json
 {
     "name": "Character name",
     "element": "element",
-    "image": "image link"
+    "image": "image link",
+    "icon": "icon link"
 }
 ```
 Note that the `_id` field is **immutable**. It can not be changed under any circumstances. Same restrictions as adding characters apply.
 
-### `DELETE` `https://rankedapi-late-cherry-618.fly.dev/CharAPi/ID`
+### `DELETE` `https://rankedapi-late-cherry-618.fly.dev/CharAPI/ID`
 
 Removes the character with the given `_id` from the API. If no such character exists, throws a server error.
 

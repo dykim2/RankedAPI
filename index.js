@@ -12,7 +12,9 @@ const PORT = process.env.PORT;
 // routes 
 
 const gameRoute = require('./routes/gameRoute');
-const charRoute = require('./routes/characterRoute')
+const charRoute = require('./routes/characterRoute');
+const bossRoute = require('./routes/bossRoute');
+
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 const corsOptions = {
@@ -23,6 +25,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use('/gameAPI', gameRoute);
 app.use('/charAPI', charRoute);
+app.use('/bossAPI', bossRoute);
 app.get('/', (req, res, next) => {
   try{
     res.send("Welcome to RankedAPI! If you need help, documentation is available.")

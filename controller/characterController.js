@@ -10,7 +10,7 @@ const addChar = asyncHandler(async (req, res) => {
     const info = await character.create(req.body);
     // check that the body meets the very specific outlined requirements
     res.status(200).json({
-      message: "Character created succesfully.",
+      message: "Character created succesfully!",
       characterName: info.name,
     });
   } catch (err) {
@@ -40,7 +40,7 @@ const getCharById = asyncHandler(async (req, res) => {
        res.status(404);
        throw new Error(`unable to locate a character with id ${id}`);
     }
-    res.status(200).json(info);
+    res.status(200).json([info, {message: `Character with id ${id} obtained successfully!`}]);
   } catch (err) {
     if (res.statusCode == 200) {
       res.status(500);
@@ -56,7 +56,7 @@ const deleteChar = asyncHandler(async (req, res) => {
       res.status(404);
       throw new Error(`unable to locate a character with id ${id}`);
     }
-    res.status(200).json([deletedChar, { message: "deletion successful" }]);
+    res.status(200).json([deletedChar, { message: "Deletion successful!" }]);
   } catch (err) {
     if (res.statusCode == 200) {
       res.status(500);
@@ -71,7 +71,7 @@ const updateChar = asyncHandler(async (req, res) => {
       res.status(400);
       throw new Error("Please enter the necessary information in the body.");
     }
-    await character.findByIdAndUpdate(id, req.body);
+    await character.findByIdAndUpdate(id, req.body).lean();
     res.status(200).json({message: "Character update successful!"});
   } catch(err) {
     if (res.statusCode == 200) {

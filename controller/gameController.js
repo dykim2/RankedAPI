@@ -25,7 +25,7 @@ const postGames = asyncHandler(async (req, res) => {
     const newGame = await game.create(req.body);
     // check if game exists or if id is -1, which then it creates based on the latest game
 
-    res.status(200).json(newGame);
+    res.status(200).json([newGame, {message: "Game created successfully!"}]);
   } catch (err) {
     if (res.statusCode == 200) {
       res.status(400);
@@ -38,7 +38,7 @@ const getGames = asyncHandler(async (req, res) => {
   try {
     const gameResult = await game.find({});
     // check if gameResult is empty
-    res.status(200).json(gameResult); // gets all the games available on the database
+    res.status(200).json([gameResult, {message: "All games obtained successfully!"}]); // gets all the games available on the database
   } catch (err) {
     if (res.statusCode == 200) {
       res.status(500);
@@ -55,7 +55,7 @@ const findGame = asyncHandler(async (req, res) => {
        res.status(404);
        throw new Error(`unable to locate a game with id ${id}`);
     }
-    res.status(200).json(gameResult);
+    res.status(200).json([gameResult, {message: `Game with id ${id} located successfully!`}]);
   } catch (err) {
     if (res.statusCode == 200) { // if an error happened, can't return the OK status code
       res.status(500);
@@ -80,7 +80,7 @@ const findActiveGames = asyncHandler(async (req, res) => {
         "_id result connected"
       )
       .exec();
-    res.status(200).json(info);
+    res.status(200).json([info, {message: "Active games successfully found!"}]);
   } 
   catch(err){
     if (res.statusCode == 200) {
@@ -98,7 +98,7 @@ const findLatest = asyncHandler(async(req, res) => {
       res.status(404).json({message: "There are no games currently available. Start with game 0!"})
     }
     else{
-      res.status(200).json({message: "Search success!", id: info._id});
+      res.status(200).json({id: info._id, message: "Search success!"});
     }
     
   }
@@ -118,6 +118,12 @@ const latest = async() => {
 const updateGame = asyncHandler(async (req, res) => { // to update games, must submit id
   try {
     const { id } = req.params;
+    /*
+    // const resultGame = await game.updateMany({ $set: { longBoss: [false, false]} });
+    // console.log(resultGame);
+    // res.status(200).json({ message: "Game updated successfully!" });
+    // return;
+    */
     // verify body is not empty
     let updatedBody = req.body;
     let newSchema = [];
