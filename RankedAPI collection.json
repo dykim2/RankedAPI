@@ -58,12 +58,46 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/gameAPI/1121",
-							"protocol": "http",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/1121",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
 							],
-							"port": "3000",
+							"path": [
+								"gameAPI",
+								"1121"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtaining latest game",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/1121",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
 							"path": [
 								"gameAPI",
 								"1121"
@@ -115,6 +149,14 @@
 					"response": []
 				},
 				{
+					"name": "Get active games",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
 					"name": "Remove a game",
 					"request": {
 						"method": "DELETE",
@@ -136,13 +178,13 @@
 					"response": []
 				},
 				{
-					"name": "Update times",
+					"name": "Update all game info",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"timest1\": [25.57, 4]\r\n}",
+							"raw": "{\r\n    \"division\": \"Green\",\r\n    \"pickst1\": [0,1],\r\n    \"bans\": [2]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -150,7 +192,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/times/1000",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/5",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -159,15 +201,14 @@
 							],
 							"path": [
 								"gameAPI",
-								"times",
-								"1000"
+								"5"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Update all game info",
+					"name": "Update player connections",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -220,7 +261,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/5",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -229,7 +270,7 @@
 							],
 							"path": [
 								"charAPI",
-								""
+								"5"
 							]
 						}
 					},
