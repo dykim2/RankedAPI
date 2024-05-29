@@ -115,6 +115,7 @@ const updateBoss = asyncHandler(async(req, res) => {
     }
 })
 
+/*
 const updateBossNoVerify = asyncHandler(async(req, res) => {
     try{
       const {id} = req.params;
@@ -128,6 +129,7 @@ const updateBossNoVerify = asyncHandler(async(req, res) => {
       throw new Error(err.message);
     }
 })
+*/
 
 const verifyBoss = (body, res, checkBoss = false, checkIcon = false, checkType = false) => {
     // check that the body has a boss name, icon, and/or type
@@ -172,5 +174,5 @@ module.exports = {
     getBossById,
     deleteBoss,
     updateBoss,
-    updateBossNoVerify
+    // updateBossNoVerify
 };
