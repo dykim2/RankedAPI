@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"_id\": 5,\r\n    \"playerst1\": [\"one\", \"two\", \"four\"],\r\n    \"playerst2\": [\"five\", \"six\", \"seven\"],\r\n    \"division\": \"Green\",\r\n    \"bosses\": [\"Maguu Kenki\", \"Aeonblight Drake\"]\r\n}",
+							"raw": "{\r\n    \"_id\": 5,\r\n    \"playerst1\": [\"one\", \"two\", \"four\"],\r\n    \"playerst2\": [\"five\", \"six\", \"seven\"],\r\n    \"division\": \"Red\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -91,7 +91,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/1121",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/latest",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -100,7 +100,7 @@
 							],
 							"path": [
 								"gameAPI",
-								"1121"
+								"latest"
 							]
 						}
 					},
@@ -152,7 +152,20 @@
 					"name": "Get active games",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/active",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"gameAPI",
+								"active"
+							]
+						}
 					},
 					"response": []
 				},
@@ -184,7 +197,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"division\": \"Green\",\r\n    \"pickst1\": [0,1],\r\n    \"bans\": [2]\r\n}",
+							"raw": "{\r\n    \"special\": \"yes\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -192,7 +205,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/5",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/game/178",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -201,7 +214,8 @@
 							],
 							"path": [
 								"gameAPI",
-								"5"
+								"game",
+								"178"
 							]
 						}
 					},
@@ -214,7 +228,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"division\": \"Green\",\r\n    \"pickst1\": [0,1],\r\n    \"bans\": [2]\r\n}",
+							"raw": "{\r\n    \"player\": \"1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -222,7 +236,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/5",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/players/178",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -231,7 +245,8 @@
 							],
 							"path": [
 								"gameAPI",
-								"5"
+								"players",
+								"178"
 							]
 						}
 					},
@@ -261,7 +276,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/5",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/-1",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -270,7 +285,7 @@
 							],
 							"path": [
 								"charAPI",
-								"5"
+								"-1"
 							]
 						}
 					},
@@ -377,7 +392,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Hu Tao\"\r\n}",
+							"raw": "{\r\n  \"name\": \"None\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -385,7 +400,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/28",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/-1",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -394,7 +409,7 @@
 							],
 							"path": [
 								"charAPI",
-								"28"
+								"-1"
 							]
 						}
 					},
@@ -402,6 +417,119 @@
 				}
 			],
 			"description": "Example calls for operations to the character API section of the RankedAPI."
+		},
+		{
+			"name": "BossAPI",
+			"item": [
+				{
+					"name": "Add a boss",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"_id\": 37,\r\n        \"boss\": \"Cineas\",\r\n        \"icon\": \"https://thumbs4.imagebam.com/f1/9f/75/METS4UK_t.pngg\",\r\n        \"type\": \"normal\",\r\n        \"long\": false,\r\n        \"element\": \"hydro\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/bossAPI",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"bossAPI"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all bosses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/bossAPI/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"bossAPI",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get specific boss",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Update boss",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"boss\": \"Cineas\",\r\n            \"icon\": \"https://thumbs4.imagebam.com/f1/9f/75/METS4UK_t.png\",\r\n            \"type\": \"legend\",\r\n            \"long\": true,\r\n            \"element\": \"hydro\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/bossAPI/37",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"bossAPI",
+								"37"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove boss",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/bossAPI/23",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"bossAPI",
+								"23"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
