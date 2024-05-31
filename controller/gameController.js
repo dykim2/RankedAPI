@@ -1,8 +1,12 @@
 const game = require('../models/gameModel.js')
 const asyncHandler = require("express-async-handler");
 const character = require('../models/characterModel.js');
+const boss = require('../models/bossModel.js');
+
 
 const postGames = asyncHandler(async (req, res) => {
+  // try to add the default pick / ban / boss
+
   try {
     // check for error
     let gameResult = {};
@@ -22,9 +26,46 @@ const postGames = asyncHandler(async (req, res) => {
         throw new Error("this should not happen. What are you doing that there is a game but no latest game?");
       }
     }
+    
+const defaultChar = await character.findById(-1);
+const defaultBoss = await boss.findById(-1);
+const aeonblight = await boss.findById(20);
+    console.log(defaultChar);
+    console.log(defaultBoss);
+    req.body.bosses = [
+      aeonblight,
+      defaultBoss,
+      defaultBoss,
+      defaultBoss,
+      defaultBoss,
+      defaultBoss,
+      defaultBoss
+    ];
+    req.body.bans = [
+      defaultChar,
+      defaultChar,
+      defaultChar,
+      defaultChar,
+      defaultChar,
+      defaultChar
+    ];
+    req.body.pickst1 = [
+      defaultChar,
+      defaultChar,
+      defaultChar,
+      defaultChar,
+      defaultChar,
+      defaultChar
+    ];
+    req.body.pickst2 = [
+      defaultChar,
+      defaultChar,
+      defaultChar,
+      defaultChar,
+      defaultChar,
+      defaultChar
+    ];
     const newGame = await game.create(req.body);
-    // check if game exists or if id is -1, which then it creates based on the latest game
-
     res.status(200).json([newGame, {message: "Game created successfully!"}]);
   } catch (err) {
     if (res.statusCode == 200) {
@@ -127,6 +168,9 @@ const updateGame = asyncHandler(async (req, res) => { // to update games, must s
     // verify body is not empty
     let updatedBody = req.body;
     let newSchema = [];
+    if(typeof req.body.bosses != "undefined"){
+
+    }
     if(typeof req.body.bans != "undefined"){
       // verify characters
       for(let i = 0; i < req.body.bans.length; i++){
