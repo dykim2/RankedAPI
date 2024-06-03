@@ -6,9 +6,11 @@ const gameSchema = mongoose.Schema(
     _id: Number,
     playerst1: {
       type: [String],
+      default: ["p11", "p12", "p13", "p14", "p15", "p16"],
     },
     playerst2: {
       type: [String],
+      default: ["p21", "p22", "p23", "p24", "p25", "p26"],
     },
     division: {
       type: String,
@@ -24,11 +26,11 @@ const gameSchema = mongoose.Schema(
     },
     draft: {
       type: Boolean,
-      default: true // draft or blind game
+      default: true, // draft or blind game
     },
     result: {
       type: String,
-      default: "waiting", // can be "waiting, setup", "progress", and "finish", or a winning team (1 or 2, in format of a string)
+      default: "boss", // can be "waiting, setup", "progress", and "finish", or a winning team (1 or 2, in format of a string)
     },
     connected: {
       type: [Number],
@@ -48,11 +50,11 @@ const gameSchema = mongoose.Schema(
     },
     timest1: {
       type: [Number],
-      default: [0, 0, 0, 0, 0, 0, 0],
+      default: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
     },
     timest2: {
       type: [Number],
-      default: [0, 0, 0, 0, 0, 0, 0],
+      default: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
     },
     pickst1: {
       type: [characterSchema],
@@ -61,7 +63,7 @@ const gameSchema = mongoose.Schema(
     pickst2: {
       type: [characterSchema],
       default: [],
-    }
+    },
   },
   {
     timestamps: true,

@@ -10,7 +10,7 @@ const addBoss = asyncHandler(async(req, res) => {
         const bossInfo = await boss.create(req.body);
         res.status(200).json({
           message: "Boss created succesfully!",
-          characterName: bossInfo.name,
+          bossName: bossInfo.name,
         });
     }
     catch(err){
@@ -41,7 +41,7 @@ const getBossById = asyncHandler(async(req, res) => {
         const info = await boss.findById(id);
         if (!info) {
           res.status(404);
-          throw new Error(`unable to locate a character with id ${id}`);
+          throw new Error(`unable to locate a boss with id ${id}`);
         }
         res
           .status(200)

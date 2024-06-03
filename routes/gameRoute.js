@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
 const {getGames, postGames, findGame, findLatest, updateGame, updatePlayers, deleteGame, findActiveGames} = require('../controller/gameController')
 
-router.post("/", postGames);
+router.post("/", jsonParser, postGames);
 
 router.get("/all", getGames);
 router.get("/find/:id", findGame);

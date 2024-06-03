@@ -14,7 +14,7 @@ const postGames = asyncHandler(async (req, res) => {
       gameResult = -1; // specifically set gameResult to create a new game
     }
     else{
-      gameResult = await game.findById(req.body._id).lean();
+      gameResult = await game.findById(req.body._id);
     }
     if(gameResult){
       // will set id to be the next one
@@ -30,8 +30,6 @@ const postGames = asyncHandler(async (req, res) => {
 const defaultChar = await character.findById(-1);
 const defaultBoss = await boss.findById(-1);
 const aeonblight = await boss.findById(20);
-    console.log(defaultChar);
-    console.log(defaultBoss);
     req.body.bosses = [
       aeonblight,
       defaultBoss,
@@ -66,6 +64,10 @@ const aeonblight = await boss.findById(20);
       defaultChar
     ];
     const newGame = await game.create(req.body);
+    if(typeof req.body.player != "undefined"){
+      doUpdate(newGame, req, res);
+      await newGame.save();
+    }
     res.status(200).json([newGame, {message: "Game created successfully!"}]);
   } catch (err) {
     if (res.statusCode == 200) {
@@ -235,16 +237,19 @@ const updateGame = asyncHandler(async (req, res) => { // to update games, must s
   }
 });
 
-const updatePlayers = asyncHandler(async(req, res)=> {
-    // find a game, check the players, increment the existing values
-  const {id} = req.params;
-  const result = await game.findById(id);
-  switch(req.body.player){
+const doUpdate = (result, req, res) => {
+  switch (req.body.player) {
     // verify the player count is valid
     // if it is not, returns a message saying it is invalid
     case "1":
-      if(result.connected[0] >= 1){ // more than one person connected
-        res.status(409).json({ error: "Someone else has already selected player 1! Please refresh and try again." });
+      if (result.connected[0] >= 1) {
+        // more than one person connected
+        res
+          .status(409)
+          .json({
+            error:
+              "Someone else has already selected player 1! Please refresh and try again.",
+          });
         return;
       }
       result.connected[0]++;
@@ -252,32 +257,38 @@ const updatePlayers = asyncHandler(async(req, res)=> {
     case "2":
       if (result.connected[1] >= 1) {
         // more than one person connected
-        res
-          .status(409)
-          .json({
-            message:
-              "Someone else has already selected player 2! Please refresh and try again.",
-          });
-          return;
+        res.status(409).json({
+          message:
+            "Someone else has already selected player 2! Please refresh and try again.",
+        });
+        return;
       }
       result.connected[1]++;
       break;
     case "ref":
       if (result.connected[2] >= 2) {
-      // more than one person connected
-      res
-        .status(409)
-        .json({
+        // more than one person connected
+        res.status(409).json({
           message:
             "Two people have already selected themselves to be refs! Please refresh and try again.",
         });
         return;
-    }
+      }
       result.connected[2]++;
       break;
     default:
-      res.status(400).json({message: "Please enter a valid player!"});
+      res.status(400).json({ message: "Please enter a valid player!" });
       return;
+  }
+  return result;
+}
+
+const updatePlayers = asyncHandler(async(req, res)=> {
+    // find a game, check the players, increment the existing values
+  const {id} = req.params;
+  const result = await game.findById(id);
+  if(!doUpdate(result, req, res)){
+    return;
   }
   await result.save();
   res.status(200).json({message: "Player selection success!"})
