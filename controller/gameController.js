@@ -117,7 +117,10 @@ const findActiveGames = asyncHandler(async (req, res) => {
             { result: "waiting" },
             { result: "Waiting" }, 
             { result: "setup" },
-            { result: "progress" }
+            { result: "progress" },
+            { result: "boss" },
+            { result: "ban" },
+            { result: "pick" }
           ],
         },
         "_id result connected"

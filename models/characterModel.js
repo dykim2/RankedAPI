@@ -11,11 +11,16 @@ const characterSchema = mongoose.Schema({
   },
   element: {
     type: String,
-    required: true
+    required: true,
   },
   icon: {
-    type: String
-  }
+    type: String,
+  },
+  chosen: {
+    // whether the character was picked or banned during this game
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("character", characterSchema);
