@@ -10,26 +10,25 @@ const postGames = asyncHandler(async (req, res) => {
   try {
     // check for error
     let gameResult = {};
-    if(req.body._id == -1){
+    if (req.body._id == -1) {
       gameResult = -1; // specifically set gameResult to create a new game
-    }
-    else{
+    } else {
       gameResult = await game.findById(req.body._id);
     }
-    if(gameResult){
+    if (gameResult) {
       // will set id to be the next one
       let val = await latest();
-      if(val != null){
+      if (val != null) {
         req.body._id = val._id + 1;
-      }
-      else{
-        throw new Error("this should not happen. What are you doing that there is a game but no latest game?");
+      } else {
+        // throw new Error("this should not happen. What are you doing that there is a game but no latest game?");
+        req.body._id = 0;
       }
     }
-    
-const defaultChar = await character.findById(-1);
-const defaultBoss = await boss.findById(-1);
-const aeonblight = await boss.findById(20);
+
+    const defaultChar = await character.findById(-1);
+    const defaultBoss = await boss.findById(-1);
+    const aeonblight = await boss.findById(20);
     req.body.bosses = [
       aeonblight,
       defaultBoss,
@@ -37,7 +36,7 @@ const aeonblight = await boss.findById(20);
       defaultBoss,
       defaultBoss,
       defaultBoss,
-      defaultBoss
+      defaultBoss,
     ];
     req.body.bans = [
       defaultChar,
@@ -45,7 +44,7 @@ const aeonblight = await boss.findById(20);
       defaultChar,
       defaultChar,
       defaultChar,
-      defaultChar
+      defaultChar,
     ];
     req.body.pickst1 = [
       defaultChar,
@@ -53,7 +52,7 @@ const aeonblight = await boss.findById(20);
       defaultChar,
       defaultChar,
       defaultChar,
-      defaultChar
+      defaultChar,
     ];
     req.body.pickst2 = [
       defaultChar,
@@ -61,14 +60,34 @@ const aeonblight = await boss.findById(20);
       defaultChar,
       defaultChar,
       defaultChar,
-      defaultChar
+      defaultChar,
     ];
+    req.body.penaltyt1 = {};
+    req.body.penaltyt2 = {};
+    req.body.deatht1 = {};
+    req.body.deatht2 = {};
+    Object.assign(
+      req.body.penaltyt1,
+      Array(req.body.bosses.length).fill(Array(6).fill(false))
+    ); // 6 is arbitrary (number of penalties), 3 is number of players
+    Object.assign(
+      req.body.penaltyt2,
+      Array(req.body.bosses.length).fill(Array(6).fill(false))
+    ); 
+    Object.assign(
+      req.body.deatht1,
+      Array(req.body.bosses.length).fill(Array(3).fill(false))
+    ); 
+    Object.assign(
+      req.body.deatht2,
+      Array(req.body.bosses.length).fill(Array(3).fill(false))
+    ); 
     const newGame = await game.create(req.body);
-    if(typeof req.body.player != "undefined"){
+    if (typeof req.body.player != "undefined") {
       doUpdate(newGame, req, res);
       await newGame.save();
     }
-    res.status(200).json([newGame, {message: "Game created successfully!"}]);
+    res.status(200).json([newGame, { message: "Game created successfully!" }]);
   } catch (err) {
     if (res.statusCode == 200) {
       res.status(400);
