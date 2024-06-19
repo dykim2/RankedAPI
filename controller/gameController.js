@@ -288,11 +288,11 @@ const doUpdate = (result, req, res) => {
       result.connected[1]++;
       break;
     case "ref":
-      if (result.connected[2] >= 2) {
-        // more than one person connected
+      if (result.connected[2] >= 3) {
+        // more than two person connected
         res.status(409).json({
           message:
-            "Two people have already selected themselves to be refs! Please refresh and try again.",
+            "Three people have already selected themselves to be refs! Please refresh and try again.",
         });
         return;
       }
