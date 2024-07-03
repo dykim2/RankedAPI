@@ -65,7 +65,13 @@ const deleteChar = asyncHandler(async (req, res) => {
   }
 });
 const updateChar = asyncHandler(async (req, res) => {
+  // update every character to have a rarity / weapon / region
   try{
+    /*
+      await character.updateMany({}, {$set: {rarity: 4}}, {multi: true})
+      res.status(200).json({ message: "Character update successful!" });
+      return;
+    */
     const {id} = req.params;
     if (!verifyElement(req.body, res)) {
       res.status(400);

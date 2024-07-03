@@ -6,3 +6,4 @@ Dockerfile
 fly.exe
 fly.toml
 flyctl.exe
+package-lock.json

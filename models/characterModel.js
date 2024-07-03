@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const characterSchema = mongoose.Schema({
   _id: Number,
   name: {
@@ -10,6 +10,18 @@ const characterSchema = mongoose.Schema({
     required: true,
   },
   element: {
+    type: String,
+    required: true,
+  },
+  rarity: {
+    type: Number,
+    default: 4,
+  },
+  weapon: {
+    type: String,
+    required: true,
+  },
+  region: {
     type: String,
     required: true,
   },

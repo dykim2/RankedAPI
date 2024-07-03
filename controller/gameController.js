@@ -66,13 +66,17 @@ const postGames = asyncHandler(async (req, res) => {
     req.body.penaltyt2 = {};
     req.body.deatht1 = {};
     req.body.deatht2 = {};
+    let length = 7;
+    if(req.body.mode == "premier"){
+      length = 9;
+    }
     Object.assign(
       req.body.penaltyt1,
-      Array(req.body.bosses.length).fill(Array(6).fill(false))
+      Array(req.body.bosses.length).fill(Array(length).fill(false))
     ); // 6 is arbitrary (number of penalties), 3 is number of players
     Object.assign(
       req.body.penaltyt2,
-      Array(req.body.bosses.length).fill(Array(6).fill(false))
+      Array(req.body.bosses.length).fill(Array(length).fill(false))
     ); 
     Object.assign(
       req.body.deatht1,
