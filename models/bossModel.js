@@ -21,10 +21,14 @@ const bossSchema = mongoose.Schema({
   element: {
     type: String,
   },
+  region: {
+    type: String,
+    required: true,
+  },
   chosen: {
-      type: Boolean,
-      default: false
-  }
+    type: Boolean,
+    default: false,
+  },
 }); 
 
 module.exports = mongoose.model("boss", bossSchema);

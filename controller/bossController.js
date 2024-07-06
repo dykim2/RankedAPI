@@ -36,26 +36,26 @@ const getBosses = asyncHandler(async(req, res) => {
 })
 
 const getBossById = asyncHandler(async(req, res) => {
-    try{
-        const { id } = req.params;
-        const info = await boss.findById(id);
-        if (!info) {
-          res.status(404);
-          throw new Error(`unable to locate a boss with id ${id}`);
-        }
-        res
-          .status(200)
-          .json([
-            info,
-            { message: `Boss with id ${id} obtained successfully!` },
-          ]);
+  try{
+    const { id } = req.params;
+    const info = await boss.findById(id);
+    if (!info) {
+      res.status(404);
+      throw new Error(`unable to locate a boss with id ${id}`);
     }
-    catch(err){
-        if (res.statusCode == 200) {
-          res.status(500);
-        }
-        throw new Error(err.message);
-    }
+    res
+      .status(200)
+      .json([
+        info,
+        { message: `Boss with id ${id} obtained successfully!` },
+      ]);
+  }
+  catch(err){
+      if (res.statusCode == 200) {
+        res.status(500);
+      }
+      throw new Error(err.message);
+  }
 })
 
 const deleteBoss = asyncHandler(async(req, res) => {
@@ -76,43 +76,72 @@ const deleteBoss = asyncHandler(async(req, res) => {
 })
 
 const updateBoss = asyncHandler(async(req, res) => {
-    try {
-      const {id} = req.params;
-      let info = await boss.findById(id);
-      // check for body.changed
-      switch(req.body.changed){
-        case "boss":{
-            if(!verifyBoss(req.body, res, true)){
-                return false;
-            }
-            info.boss = req.body.boss;
-            break;
+  try {
+    /*
+      await boss.updateMany({}, {$set: {region: "Mondstadt"}}, {multi: true})
+      res.status(200).json({ message: "Bossing update successful!" });
+      return;
+    */
+    const { id } = req.params;
+    let info = await boss.findById(id);
+    // check for body.changed
+    let text = "region";
+    switch (text) {
+      case "boss": {
+        if (!verifyBoss(req.body, res, true)) {
+          return false;
         }
-        case "icon":{
-            if (!verifyBoss(req.body, res, false, true)) {
-              return false;
-            }
-            info.icon = req.body.icon;
-            break;
-        }
-        case "type":{
-            if (!verifyBoss(req.body, res, false, false, true)) {
-              return false;
-            }
-            info.type = req.body.type;
-            break;
-        }
-        default:
-            throw new Error("Please enter a valid changed value.")
+        info.boss = req.body.boss;
+        break;
       }
-      info.save();
-      res.status(200).json({message: "Boss information successfully updated!"})
-    } catch (err) {
-      if (res.statusCode == 200) {
-        res.status(500);
+      case "icon": {
+        if (!verifyBoss(req.body, res, false, true)) {
+          return false;
+        }
+        info.icon = req.body.icon;
+        break;
       }
-      throw new Error(err.message);
+      case "type": {
+        if (!verifyBoss(req.body, res, false, false, true)) {
+          return false;
+        }
+        info.type = req.body.type;
+        break;
+      }
+      case "region": {
+        let regions = ["Mondstadt", "Liyue", "Inazuma", "Sumeru", "Fontaine", "Natlan"];
+        let found = false;
+        let index = -1;
+        for(let i = 0; i < regions.length; i++){
+          if(req.body.region.toLowerCase() == regions[i].toLowerCase()){
+            found = true;
+            index = i;
+            break;
+          }
+        }
+        if(found){
+          info.region = regions[index];
+        }
+        else{
+          return false;
+        }
+        break;
+      }
+      default:
+        console.log(typeof req.body.changed);
+        console.log(req.body.changed === "region")
+        throw new Error("Please enter a valid changed value.");
     }
+    info.save();
+    res
+      .status(200)
+      .json({ message: "Boss information successfully updated!" });
+  } catch (err) {
+    if (res.statusCode == 200) {
+      res.status(500);
+    }
+    throw new Error(err.message);
+  }
 })
 
 /*
@@ -134,36 +163,36 @@ const updateBossNoVerify = asyncHandler(async(req, res) => {
 const verifyBoss = (body, res, checkBoss = false, checkIcon = false, checkType = false) => {
     // check that the body has a boss name, icon, and/or type
     if(checkBoss){   
-        if(typeof body.boss == "undefined" || body.boss == ""){
-            res.status(400);
-            throw new Error("Please enter a boss option");
-        }
+      if(typeof body.boss == "undefined" || body.boss == ""){
+          res.status(400);
+          throw new Error("Please enter a boss option");
+      }
     }
     if(checkIcon){
-        if(typeof body.icon == "undefined" || body.icon == ""){
-            res.status(400);
-            throw new Error("Please enter an icon for the boss.");
-        }
+      if(typeof body.icon == "undefined" || body.icon == ""){
+          res.status(400);
+          throw new Error("Please enter an icon for the boss.");
+      }
     }
     if(checkType) {
-        if (typeof body.type == "undefined" || body.type == "") {
-            res.status(400);
-            throw new Error("Please enter a boss type.");
-        }
-        else{
-            let types = ["normal", "weekly", "legend"];
-            let found = false;
-            types.forEach((type) => {
-              if (body.type.toLowerCase() == type) {
-                found = true;
-                body.type = body.type.toLowerCase();
-              }
-            });
-            if (!found) {
-              res.status(400);
-              throw new Error("Please enter a valid boss type.");
+      if (typeof body.type == "undefined" || body.type == "") {
+          res.status(400);
+          throw new Error("Please enter a boss type.");
+      }
+      else{
+          let types = ["normal", "weekly", "legend"];
+          let found = false;
+          types.forEach((type) => {
+            if (body.type.toLowerCase() == type) {
+              found = true;
+              body.type = body.type.toLowerCase();
             }
-        }
+          });
+          if (!found) {
+            res.status(400);
+            throw new Error("Please enter a valid boss type.");
+          }
+      }
     }
     return true;
 }
