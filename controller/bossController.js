@@ -85,8 +85,7 @@ const updateBoss = asyncHandler(async(req, res) => {
     const { id } = req.params;
     let info = await boss.findById(id);
     // check for body.changed
-    let text = "region";
-    switch (text) {
+    switch (req.body.changed) {
       case "boss": {
         if (!verifyBoss(req.body, res, true)) {
           return false;
@@ -128,8 +127,6 @@ const updateBoss = asyncHandler(async(req, res) => {
         break;
       }
       default:
-        console.log(typeof req.body.changed);
-        console.log(req.body.changed === "region")
         throw new Error("Please enter a valid changed value.");
     }
     info.save();
