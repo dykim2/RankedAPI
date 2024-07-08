@@ -190,14 +190,29 @@ const updateGame = asyncHandler(async (req, res) => { // to update games, must s
     /*
     // const resultGame = await game.updateMany({ $set: { longBoss: [false, false]} });
     // console.log(resultGame);
-    // res.status(200).json({ message: "Game updated successfully!" });
+    // res.status(200).json({ message: "Game stuffed successfully!" });
     // return;
     */
     // verify body is not empty
     let updatedBody = req.body;
     let newSchema = [];
     if(typeof req.body.bosses != "undefined"){
-
+      // need to implement
+      for (let i = 0; i < req.body.bosses.length; i++) {
+        // find a way to convert id to name
+        const bossInfo = await boss.findById(req.body.bosses[i]); // must be in the form of an id - characters will be placed in order
+        if (!bossInfo) {
+          res.status(404);
+          throw new Error(
+            `unable to locate a boss with id ${req.body.bosses[i]}`
+          );
+        }
+        newSchema.push(bossInfo);
+      }
+    }
+    if(newSchema.length != 0){
+      updatedBody.bosses = newSchema;
+      newSchema = [];
     }
     if(typeof req.body.bans != "undefined"){
       // verify characters
