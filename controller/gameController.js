@@ -28,7 +28,7 @@ const postGames = asyncHandler(async (req, res) => {
 
     const defaultChar = await character.findById(-1);
     const defaultBoss = await boss.findById(-1);
-    const aeonblight = await boss.findById(20);
+    const aeonblight = await boss.findById(19);
     req.body.bosses = [
       aeonblight,
       defaultBoss,

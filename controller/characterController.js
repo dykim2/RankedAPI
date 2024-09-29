@@ -1,4 +1,5 @@
 const character = require('../models/characterModel.js');
+const boss = require("../models/bossModel.js");
 const asyncHandler = require("express-async-handler");
 
 const addChar = asyncHandler(async (req, res) => {
@@ -23,6 +24,22 @@ const addChar = asyncHandler(async (req, res) => {
 const getChar = asyncHandler(async (req, res) => {
   try {
     const info = await character.find({});
+    const otherInfo = await boss.find({});
+    let newInfo = JSON.parse(JSON.stringify(otherInfo));
+    newInfo = newInfo.map(moreInfo => moreInfo.icon);
+    // console.log(newInfo);
+    const compare = (char1, char2) => {
+      if (char1.name.toLowerCase() > char2.name.toLowerCase()) {
+        return 1;
+      }
+      else if(char1.name.toLowerCase() < char2.name.toLowerCase()) {
+        return -1;
+      }
+      else{
+        return 0;
+      }
+    }
+    info.sort(compare);
     res.status(200).json([info, {message: "Character successfully obtained!"}]);
   } catch (err) {
     if (res.statusCode == 200) {

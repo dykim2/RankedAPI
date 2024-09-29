@@ -23,7 +23,19 @@ const addBoss = asyncHandler(async(req, res) => {
 
 const getBosses = asyncHandler(async(req, res) => {
     try {
-        const info = await boss.find({});
+        const info = await boss.find({}, 'boss icon');
+        const compare = (a, b) => {
+          if(a.boss.toLowerCase() > b.boss.toLowerCase()){
+            return 1;
+          }
+          else if(a.boss.toLowerCase() < b.boss.toLowerCase()){
+            return -1;
+          }
+          else{
+            return 0;
+          }
+        }
+        info.sort(compare);
         res
           .status(200)
           .json([info, { message: "Bosses successfully found!" }]);
