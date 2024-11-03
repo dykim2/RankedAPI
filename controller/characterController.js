@@ -111,14 +111,13 @@ const updateRestrictions = asyncHandler(async(req, res) => {
     if(idChar.restrictions == undefined){
       idChar.restrictions = ["", "", "", "", "", "", ""];
     }
-    if(req.body.restrictions.length == 7 && req.body.type == "all"){
-      idChar.restrictions = req.body.restrictions;
-    }
-    else if(req.body.restrictions.length == 1 && req.body.type == "single"){
+    if(typeof req.body.restrictions == "undefined" && typeof req.body.restriction != "undefined" && req.body.type == "single"){
       idChar.restrictions[req.body.index] = req.body.restriction;
     }
-    else{
-      throw new Error("Please make sure the restrictions are valid!")
+    else if (req.body.restrictions.length == 7 && req.body.type == "all") {
+      idChar.restrictions = req.body.restrictions;
+    } else {
+      throw new Error("Please make sure the restrictions input is valid!");
     }
     await idChar.save();
     res.status(200).json({message: "Restrictions update successful!"})

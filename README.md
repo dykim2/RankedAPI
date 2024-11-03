@@ -182,7 +182,8 @@ Updates the character with the given ID's restrictions at a set constellation le
 {
     "restriction": "", // only use if updating one constellation
     "restrictions": [""], // only use if updating all constellations
-    "type": "all" // either 'all' or 'single', all for all constellations
+    "type": "all", // either 'all' or 'single', all for all constellations
+    "index": 0 // from 0 to 6, the specific constellation restriction to edit. if larger than 6 or less than 0, throws an error. 
 }
 ```
 
