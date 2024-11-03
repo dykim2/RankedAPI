@@ -29,15 +29,31 @@ const postGames = asyncHandler(async (req, res) => {
     const defaultChar = await character.findById(-1);
     const defaultBoss = await boss.findById(-1);
     const aeonblight = await boss.findById(19);
-    req.body.bosses = [
-      aeonblight,
-      defaultBoss,
-      defaultBoss,
-      defaultBoss,
-      defaultBoss,
-      defaultBoss,
-      defaultBoss,
-    ];
+    // find a way to support 6 bosses, with a setting, also initially show a button at the bottom after pressing reg with custom settings
+    // replace the old modal package with the material UI one
+
+    // support premier - 9 bosses total
+    if(req.body.defaultBoss == -1){
+      req.body.bosses = [
+        defaultBoss,
+        defaultBoss,
+        defaultBoss,
+        defaultBoss,
+        defaultBoss,
+        defaultBoss
+      ];
+    }
+    else{  
+      req.body.bosses = [
+        aeonblight,
+        defaultBoss,
+        defaultBoss,
+        defaultBoss,
+        defaultBoss,
+        defaultBoss,
+        defaultBoss,
+      ];
+    }
     req.body.bans = [
       defaultChar,
       defaultChar,
@@ -306,7 +322,7 @@ const doUpdate = (result, req, res) => {
       }
       result.connected[1]++;
       break;
-    case "ref":
+    case "Ref":
       if (result.connected[2] >= 3) {
         // more than two person connected
         res.status(409).json({

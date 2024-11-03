@@ -103,6 +103,33 @@ const updateChar = asyncHandler(async (req, res) => {
     throw new Error(err.message);
   }
 })
+const updateRestrictions = asyncHandler(async(req, res) => {
+  try{
+    const {id} = req.params;
+    // can do either one restriction or all restrictions
+    const idChar = await character.findById(id);
+    if(idChar.restrictions == undefined){
+      idChar.restrictions = ["", "", "", "", "", "", ""];
+    }
+    if(req.body.restrictions.length == 7 && req.body.type == "all"){
+      idChar.restrictions = req.body.restrictions;
+    }
+    else if(req.body.restrictions.length == 1 && req.body.type == "single"){
+      idChar.restrictions[req.body.index] = req.body.restriction;
+    }
+    else{
+      throw new Error("Please make sure the restrictions are valid!")
+    }
+    await idChar.save();
+    res.status(200).json({message: "Restrictions update successful!"})
+  }
+  catch(err){
+    if (res.statusCode == 200) {
+      res.status(500);
+    }
+    throw new Error(err.message);
+  }
+})
 const verify = (body, res) => {
   // if the requirements are not met, rejects the request
   if (typeof body.name === "undefined" || body.name == "") {
@@ -128,15 +155,16 @@ const verifyElement = (body, res) => {
       "pyro",
       "cryo",
       "geo",
+      "physical"
     ];
     let elem = body.element;
-    if (!elements.includes(elem) && body.name.toLowerCase() != "traveler") { // not one of the 7 elements, and not the traveller
+    if (!elements.includes(elem) && (body.name != undefined && body.name.toLowerCase() != "traveler")) { // not one of the 7 elements, and not the traveller
       res.status(400);
       throw new Error(
         "Please specify a valid element. Make sure the element name is in lowercase only."
       );
     }
-    if (body.name.toLowerCase() == "traveler" && body.element != "variable") { 
+    if ((body.name != undefined && body.name.toLowerCase() != "traveler") && body.element != "variable") { 
       // special case: just for traveler - the only accepted traveler element is "variable"
       res.status(400);
       throw new Error(
@@ -152,5 +180,6 @@ module.exports = {
     getChar,
     getCharById,
     deleteChar,
-    updateChar
+    updateChar,
+    updateRestrictions
 }

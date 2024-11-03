@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const characterSchema = require('./characterModel').schema;
+const mongoose = require("mongoose");
+const characterSchema = require("./characterModel").schema;
 const bossSchema = require("./bossModel").schema;
 const gameSchema = mongoose.Schema(
   {
@@ -14,11 +14,15 @@ const gameSchema = mongoose.Schema(
     },
     division: {
       type: String,
-      default: "Advanced",
+      default: "Standard",
     },
     bans: {
       type: [characterSchema],
       default: [],
+    },
+    extrabans: {
+      type: [characterSchema],
+      default: [], // extra bans go in order, depending on the number of extra bans a team gets, max 2
     },
     bosses: {
       type: [bossSchema],
@@ -27,6 +31,14 @@ const gameSchema = mongoose.Schema(
     draft: {
       type: Boolean,
       default: true, // draft or blind game
+    },
+    extrabanst1: {
+      type: Number,
+      default: 0, // number of extra bans team 1 gets
+    },
+    extrabanst2: {
+      type: Number,
+      default: 0,
     },
     result: {
       type: String,
@@ -38,11 +50,27 @@ const gameSchema = mongoose.Schema(
     },
     team1: {
       type: String,
-      default: "Team 1",
+      default: "team 1",
     },
     team2: {
       type: String,
-      default: "Team 2",
+      default: "team 2",
+    },
+    penaltyt1: {
+      type: Object,
+      required: true,
+    },
+    penaltyt2: {
+      type: Object,
+      required: true,
+    },
+    deatht1: {
+      type: Object,
+      required: true,
+    },
+    deatht2: {
+      type: Object,
+      required: true,
     },
     turn: {
       type: Number,
@@ -60,22 +88,6 @@ const gameSchema = mongoose.Schema(
       type: [Number],
       default: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
     },
-    penaltyt1: {
-      type: Object,
-      required: true
-    },
-    penaltyt2: {
-      type: Object,
-      required: true
-    },
-    deatht1: {
-      type: Object,
-      required: true
-    },
-    deatht2: {
-      type: Object,
-      required: true
-    },
     pickst1: {
       type: [characterSchema],
       default: [],
@@ -86,13 +98,13 @@ const gameSchema = mongoose.Schema(
     },
     pickorder: {
       type: [characterSchema],
-      default: []
-    }
+      default: [],
+    },
   },
   {
     timestamps: true,
   }
 );
 
-const game = mongoose.model("Game", gameSchema)
+const game = mongoose.model("Game", gameSchema);
 module.exports = game;

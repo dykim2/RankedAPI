@@ -175,6 +175,17 @@ Updates the character with the given ID's information. Requires a body with any 
 ```
 Note that the `_id` field is **immutable**. It can not be changed under any circumstances. Same restrictions as adding characters apply.
 
+### `PUT` `https://rankedapi-late-cherry-618.fly.dev/CharAPI/restrictions/ID`
+
+Updates the character with the given ID's restrictions at a set constellation level (index). Either one constellation restriction or all constellation restrictions can be modified at once.
+```json
+{
+    "restriction": "", // only use if updating one constellation
+    "restrictions": [""], // only use if updating all constellations
+    "type": "all" // either 'all' or 'single', all for all constellations
+}
+```
+
 ### `DELETE` `https://rankedapi-late-cherry-618.fly.dev/CharAPI/ID`
 
 Removes the character with the given `_id` from the API. If no such character exists, throws a server error.
