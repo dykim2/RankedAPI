@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"_id\": 5,\r\n    \"playerst1\": [\"one\", \"two\", \"four\"],\r\n    \"playerst2\": [\"five\", \"six\", \"seven\"],\r\n    \"division\": \"Red\"\r\n}",
+							"raw": "{\r\n    \"_id\": 100\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -58,7 +58,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/1121",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/find/171",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -67,7 +67,8 @@
 							],
 							"path": [
 								"gameAPI",
-								"1121"
+								"find",
+								"171"
 							]
 						}
 					},
@@ -112,7 +113,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/all",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -121,7 +122,7 @@
 							],
 							"path": [
 								"gameAPI",
-								""
+								"all"
 							]
 						}
 					},
@@ -175,7 +176,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/1000",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/0",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -184,7 +185,7 @@
 							],
 							"path": [
 								"gameAPI",
-								"1000"
+								"0"
 							]
 						}
 					},
@@ -197,7 +198,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"special\": \"yes\"\r\n}",
+							"raw": "{\r\n    \"result\": \"progress\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -205,7 +206,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/game/178",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/game/12",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -215,7 +216,7 @@
 							"path": [
 								"gameAPI",
 								"game",
-								"178"
+								"12"
 							]
 						}
 					},
@@ -228,7 +229,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"player\": \"1\"\r\n}",
+							"raw": "{\r\n    \"player\": \"ref\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -236,7 +237,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/players/178",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/gameAPI/players/58",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -246,7 +247,7 @@
 							"path": [
 								"gameAPI",
 								"players",
-								"178"
+								"58"
 							]
 						}
 					},
@@ -268,7 +269,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Arlecchino\",\r\n  \"image\": \"image link\",\r\n  \"element\": \"Pyro\",\r\n  \"role\": \"Carry\",\r\n  \"description\": \"A heavy hitter of a pyro dps who cannot heal herself in battle. Dodging is really important on her to keep her bond of life active.\",\r\n  \"difficulty\": 3,\r\n  \"limits\": [0,1],\r\n  \"restrictions\": [\"no 5* or Battle Pass weapons\", \"no 5* or Battle Pass weapons at C1\"],\r\n  \"_id\": \"Arlecchino\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -276,7 +277,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/-1",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/0",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -285,7 +286,7 @@
 							],
 							"path": [
 								"charAPI",
-								"-1"
+								"0"
 							]
 						}
 					},
@@ -301,7 +302,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Arlecchino\",\r\n  \"image\": \"image link\",\r\n  \"element\": \"Pyro\",\r\n  \"role\": \"Carry\",\r\n  \"description\": \"A heavy hitter of a pyro dps who cannot heal herself in battle. Dodging is really important on her to keep her bond of life active.\",\r\n  \"difficulty\": 3,\r\n  \"limits\": [0,1],\r\n  \"restrictions\": [\"no 5* or Battle Pass weapons\", \"no 5* or Battle Pass weapons at C1\"],\r\n  \"_id\": \"Arlecchino\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -309,7 +310,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/12",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -318,7 +319,7 @@
 							],
 							"path": [
 								"charAPI",
-								""
+								"12"
 							]
 						}
 					},
@@ -331,7 +332,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"_id\": 1,\r\n  \"name\": \"Barbara\",\r\n  \"element\": \"green\",\r\n  \"image\": \"image link\"\r\n}",
+							"raw": "{\r\n        \"chosen\": false,\r\n        \"_id\": 90,\r\n        \"name\": \"Ororon\",\r\n        \"image\": \"coming soon\",\r\n        \"element\": \"electro\",\r\n        \"region\": \"Natlan\",\r\n        \"weapon\": \"Bow\",\r\n        \"rarity\": 4,\r\n        \"icon\": \"https://thumbs4.imagebam.com/15/47/b5/MEWPYV3_t.png\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -392,7 +393,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"None\"\r\n}",
+							"raw": "{\r\n    \"element\": \"pyro\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -400,7 +401,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/-1",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/0",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -409,7 +410,38 @@
 							],
 							"path": [
 								"charAPI",
-								"-1"
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update character restrictions",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"single\",\r\n    \"index\": 2,\r\n    \"restriction\": \"No 5* cons\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/charAPI/restrictions/0",
+							"protocol": "https",
+							"host": [
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
+							],
+							"path": [
+								"charAPI",
+								"restrictions",
+								"0"
 							]
 						}
 					},
@@ -428,7 +460,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"_id\": 37,\r\n        \"boss\": \"Cineas\",\r\n        \"icon\": \"https://thumbs4.imagebam.com/f1/9f/75/METS4UK_t.pngg\",\r\n        \"type\": \"normal\",\r\n        \"long\": false,\r\n        \"element\": \"hydro\"\r\n    }",
+							"raw": "{\r\n            \"_id\": 41,\r\n            \"boss\": \"Papilla\",\r\n            \"icon\": \"https://thumbs4.imagebam.com/e8/a7/0c/MEWPYUZ_t.png\",\r\n            \"type\": \"normal\",\r\n            \"long\": false,\r\n            \"element\": \"physical\",\r\n            \"region\": \"Natlan\",\r\n            \"chosen\": false,\r\n            \"__v\": 0\r\n        }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -436,7 +468,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/bossAPI",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/bossAPI/",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -444,7 +476,8 @@
 								"dev"
 							],
 							"path": [
-								"bossAPI"
+								"bossAPI",
+								""
 							]
 						}
 					},
@@ -456,12 +489,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/bossAPI/all",
-							"protocol": "http",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/bossAPI/all",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"rankedapi-late-cherry-618",
+								"fly",
+								"dev"
 							],
-							"port": "3000",
 							"path": [
 								"bossAPI",
 								"all"
@@ -485,7 +519,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"boss\": \"Cineas\",\r\n            \"icon\": \"https://thumbs4.imagebam.com/f1/9f/75/METS4UK_t.png\",\r\n            \"type\": \"legend\",\r\n            \"long\": true,\r\n            \"element\": \"hydro\"\r\n}",
+							"raw": "{\r\n    \"changed\": \"region\",\r\n    \"region\": \"Liyue\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -493,7 +527,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/bossAPI/37",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/bossAPI/6",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -502,7 +536,7 @@
 							],
 							"path": [
 								"bossAPI",
-								"37"
+								"6"
 							]
 						}
 					},
@@ -514,7 +548,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://rankedapi-late-cherry-618.fly.dev/bossAPI/23",
+							"raw": "https://rankedapi-late-cherry-618.fly.dev/bossAPI/38",
 							"protocol": "https",
 							"host": [
 								"rankedapi-late-cherry-618",
@@ -523,13 +557,14 @@
 							],
 							"path": [
 								"bossAPI",
-								"23"
+								"38"
 							]
 						}
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Example calls for operations to the boss API section of the RankedAPI."
 		}
 	]
 }
