@@ -73,6 +73,14 @@ const getBossById = asyncHandler(async(req, res) => {
   }
 })
 
+const getLatestBoss = asyncHandler(async(req, res) => {
+  const info = await boss.find({}, "_id");
+  res.status(200).json({
+    message: "Latest boss successfully found!",
+    latest: info[info.length - 1]._id
+  });
+})
+
 const deleteBoss = asyncHandler(async(req, res) => {
     try {
       const { id } = req.params;
@@ -213,6 +221,7 @@ module.exports = {
     addBoss,
     getBosses,
     getBossById,
+    getLatestBoss,
     deleteBoss,
     updateBoss,
     // updateBossNoVerify
