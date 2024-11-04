@@ -2,12 +2,14 @@ const game = require('../models/gameModel.js')
 const asyncHandler = require("express-async-handler");
 const character = require('../models/characterModel.js');
 const boss = require('../models/bossModel.js');
+const bossController = require("../controller/bossController.js")
 
 
 const postGames = asyncHandler(async (req, res) => {
   // try to add the default pick / ban / boss
-
+  const TOTAL_BANS = 6;
   try {
+    console.log("hi")
     // check for error
     let gameResult = {};
     if (req.body._id == -1) {
@@ -28,71 +30,59 @@ const postGames = asyncHandler(async (req, res) => {
 
     const defaultChar = await character.findById(-1);
     const defaultBoss = await boss.findById(-1);
+    const newestBoss = await bossController.latestBoss();
+    console.log("newest "+newestBoss)
+    let bossList = [] // entering none for specific boss just means the standard none that is the default
+    if(req.body.initialBosses[0] >= -1 && req.body.initialBosses[0] <= newestBoss){
+      const addBoss = await boss.findById(req.body.initialBosses[0]);
+      bossList.push(addBoss)
+    }
     const aeonblight = await boss.findById(19);
-    // find a way to support 6 bosses, with a setting, also initially show a button at the bottom after pressing reg with custom settings
-    // replace the old modal package with the material UI one
+    console.log(aeonblight);
+    if(req.body.initialBosses[0] == -2){
+      bossList.push(aeonblight);
+    }
+    if(req.body.initialBosses[1] >= -1 && req.body.initialBosses[1] <= newestBoss) {
+      bossList.push(await boss.findById(req.body.initialBosses[1]));
+    }
+    let length = 7;
+    if (req.body.division == "premier") {
+      length = 9;
+    }
+    for(let i = bossList.length; i < req.body.bossCount + length; i++){
+      bossList.push(defaultBoss);
+    }
+    // basically check if stuff is undefined, if it is defined then continue, if not then ignore
 
-    // support premier - 9 bosses total
-    if(req.body.defaultBoss == -1){
-      req.body.bosses = [
-        defaultBoss,
-        defaultBoss,
-        defaultBoss,
-        defaultBoss,
-        defaultBoss,
-        defaultBoss
-      ];
+    // find a way to support 6 bosses, with a setting, also initially show a button at the bottom after pressing reg with custom settings
+    req.body.bosses = bossList
+    req.body.bans = [];
+    req.body.pickst1 = [];
+    req.body.pickst2 = [];
+    req.body.extrabans = []
+
+    
+
+    console.log("nerd")
+    for(let i = 0; i < TOTAL_BANS; i++){
+      req.body.bans.push(defaultChar);
+      req.body.pickst1.push(defaultChar);
+      req.body.pickst2.push(defaultChar);
+      if(i < req.body.extrabanst1 + req.body.extrabanst2){
+        req.body.extrabans.push(defaultChar);
+      }
     }
-    else{  
-      req.body.bosses = [
-        aeonblight,
-        defaultBoss,
-        defaultBoss,
-        defaultBoss,
-        defaultBoss,
-        defaultBoss,
-        defaultBoss,
-      ];
-    }
-    req.body.bans = [
-      defaultChar,
-      defaultChar,
-      defaultChar,
-      defaultChar,
-      defaultChar,
-      defaultChar,
-    ];
-    req.body.pickst1 = [
-      defaultChar,
-      defaultChar,
-      defaultChar,
-      defaultChar,
-      defaultChar,
-      defaultChar,
-    ];
-    req.body.pickst2 = [
-      defaultChar,
-      defaultChar,
-      defaultChar,
-      defaultChar,
-      defaultChar,
-      defaultChar,
-    ];
     req.body.penaltyt1 = {};
     req.body.penaltyt2 = {};
     req.body.deatht1 = {};
     req.body.deatht2 = {};
-    let length = 7;
-    if(req.body.mode == "premier"){
-      length = 9;
-    }
     Object.assign(
       req.body.penaltyt1,
-      Array(req.body.bosses.length).fill(Array(length).fill(false))
+      Array(req.body.bosses.length).fill(Array(6).fill(false))
     ); // 6 is arbitrary (number of penalties), 3 is number of players
     Object.assign(
       req.body.penaltyt2,
-      Array(req.body.bosses.length).fill(Array(length).fill(false))
+      Array(req.body.bosses.length).fill(Array(6).fill(false))
     ); 
     Object.assign(
       req.body.deatht1,
@@ -101,7 +91,18 @@ const postGames = asyncHandler(async (req, res) => {
     Object.assign(
       req.body.deatht2,
       Array(req.body.bosses.length).fill(Array(3).fill(false))
-    ); 
+    );
+    if(req.body.fearless){
+      req.body.fearlessBosses = []
+      const thisGame = game.findById(req.body.fearlessID);
+      for(boss in thisGame.bosses){
+        req.body.fearlessBosses.push(boss._id);
+      }
+    }
+    else{
+      req.body.fearlessBosses = [];
+    }
+    console.log("new body ya")
     const newGame = await game.create(req.body);
     if (typeof req.body.player != "undefined") {
       doUpdate(newGame, req, res);
