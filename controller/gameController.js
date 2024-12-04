@@ -7,6 +7,15 @@ const bossController = require("../controller/bossController.js")
 
 const postGames = asyncHandler(async (req, res) => {
   // try to add the default pick / ban / boss
+  // console.log("request")
+  // console.log(req.body)
+  if(req.body.fearless == "true"){
+    req.body.fearless = true;
+  }
+  else if(req.body.fearless == "false"){
+    req.body.fearless = false;
+  }
+  // console.log(req.body);
   const TOTAL_BANS = 6;
   try {
     console.log("hi")
@@ -31,14 +40,12 @@ const postGames = asyncHandler(async (req, res) => {
     const defaultChar = await character.findById(-1);
     const defaultBoss = await boss.findById(-1);
     const newestBoss = await bossController.latestBoss();
-    console.log("newest "+newestBoss)
     let bossList = [] // entering none for specific boss just means the standard none that is the default
     if(req.body.initialBosses[0] >= -1 && req.body.initialBosses[0] <= newestBoss){
       const addBoss = await boss.findById(req.body.initialBosses[0]);
       bossList.push(addBoss)
     }
     const aeonblight = await boss.findById(19);
-    console.log(aeonblight);
     if(req.body.initialBosses[0] == -2){
       bossList.push(aeonblight);
     }
@@ -59,11 +66,9 @@ const postGames = asyncHandler(async (req, res) => {
     req.body.bans = [];
     req.body.pickst1 = [];
     req.body.pickst2 = [];
-    req.body.extrabans = []
+    req.body.extrabans = [] // capping at 4
 
     
-
-    console.log("nerd")
     for(let i = 0; i < TOTAL_BANS; i++){
       req.body.bans.push(defaultChar);
       req.body.pickst1.push(defaultChar);
@@ -92,23 +97,36 @@ const postGames = asyncHandler(async (req, res) => {
       req.body.deatht2,
       Array(req.body.bosses.length).fill(Array(3).fill(false))
     );
-    if(req.body.fearless){
-      req.body.fearlessBosses = []
-      const thisGame = game.findById(req.body.fearlessID);
-      for(boss in thisGame.bosses){
-        req.body.fearlessBosses.push(boss._id);
+    
+    if(req.body.fearless == true){
+      let fearlessBoss = []
+      const thisGame = await game.findById(req.body.fearlessID);
+      if(typeof thisGame != undefined){
+        for (let i = 0; i < thisGame.bosses.length; i++) {
+          fearlessBoss.push(thisGame.bosses[i]._id);
+        }
       }
+      req.body.fearlessBosses = fearlessBoss
     }
     else{
       req.body.fearlessBosses = [];
     }
-    console.log("new body ya")
     const newGame = await game.create(req.body);
+    let currStatus = true;
+    let verify = ""
     if (typeof req.body.player != "undefined") {
-      doUpdate(newGame, req, res);
+      verify = doUpdate(newGame, req, res);
+      if(verify.includes("Please")){
+        currStatus = false;
+      }
       await newGame.save();
     }
-    res.status(200).json([newGame, { message: "Game created successfully!" }]);
+    if(currStatus){
+      res.status(200).json([newGame, { message: "Game created successfully!" }]);
+    }
+    else{
+      res.status(409).json({message: verify})
+    }
   } catch (err) {
     if (res.statusCode == 200) {
       res.status(400);
@@ -295,50 +313,37 @@ const updateGame = asyncHandler(async (req, res) => { // to update games, must s
   }
 });
 
-const doUpdate = (result, req, res) => {
+const doUpdate = (result, req) => {
+  console.log("player: "+req.body.player)
   switch (req.body.player) {
     // verify the player count is valid
     // if it is not, returns a message saying it is invalid
-    case "1":
+    case "Player 1":
       if (result.connected[0] >= 1) {
         // more than one person connected
-        res
-          .status(409)
-          .json({
-            error:
-              "Someone else has already selected player 1! Please refresh and try again.",
-          });
-        return;
+        return "Someone else has already selected player 1! Please refresh and try again."
       }
       result.connected[0]++;
       break;
-    case "2":
+    case "Player 2":
       if (result.connected[1] >= 1) {
         // more than one person connected
-        res.status(409).json({
-          message:
-            "Someone else has already selected player 2! Please refresh and try again.",
-        });
-        return;
+         return "Someone else has already selected player 2! Please refresh and try again.";
       }
       result.connected[1]++;
       break;
     case "Ref":
+    case "Ref (Custom)":
       if (result.connected[2] >= 3) {
-        // more than two person connected
-        res.status(409).json({
-          message:
-            "Three people have already selected themselves to be refs! Please refresh and try again.",
-        });
-        return;
+        // more than two person connected 
+        return "Three people have already selected themselves to be refs! Please refresh and try again.";
       }
       result.connected[2]++;
       break;
     default:
-      res.status(400).json({ message: "Please enter a valid player!" });
-      return;
+      return "Please enter a valid player!";
   }
-  return result;
+  return "No problems.";
 }
 
 const updatePlayers = asyncHandler(async(req, res)=> {
