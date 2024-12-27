@@ -318,14 +318,14 @@ const doUpdate = (result, req) => {
   switch (req.body.player) {
     // verify the player count is valid
     // if it is not, returns a message saying it is invalid
-    case "Player 1":
+    case "1":
       if (result.connected[0] >= 1) {
         // more than one person connected
         return "Someone else has already selected player 1! Please refresh and try again."
       }
       result.connected[0]++;
       break;
-    case "Player 2":
+    case "2":
       if (result.connected[1] >= 1) {
         // more than one person connected
          return "Someone else has already selected player 2! Please refresh and try again.";

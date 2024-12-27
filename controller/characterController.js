@@ -163,7 +163,7 @@ const verifyElement = (body, res) => {
         "Please specify a valid element. Make sure the element name is in lowercase only."
       );
     }
-    if ((body.name != undefined && body.name.toLowerCase() != "traveler") && body.element != "variable") { 
+    if ((body.name != undefined && body.name.toLowerCase() == "traveler") && body.element != "variable") { 
       // special case: just for traveler - the only accepted traveler element is "variable"
       res.status(400);
       throw new Error(
