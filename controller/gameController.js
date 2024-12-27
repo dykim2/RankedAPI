@@ -357,6 +357,33 @@ const updatePlayers = asyncHandler(async(req, res)=> {
   res.status(200).json({message: "Player selection success!"})
 })
 
+const undoActivePlayers = asyncHandler(async(req, res) => {
+  const { id } = req.params;
+  const result = await game.findById(id);
+  switch (req.body.player) {
+    // verify the player count is valid
+    // if it is not, returns a message saying it is invalid
+    case "1":
+      if (result.connected[0] > 0) {
+        result.connected[0]--;
+      }
+      break;
+    case "2":
+      if (result.connected[1] > 0) {
+        result.connected[1]--;
+      }
+      break;
+    case "Ref":
+    case "Ref (Custom)":
+      if (result.connected[2] > 0) {
+        result.connected[2]--;
+      }
+      break;
+  }
+  await result.save();
+  res.status(200).json({ message: "Player removal success!" });
+})
+
 // update one boss' time per call
 /*
 const updateTimes = asyncHandler(async(req, res) => {
@@ -465,6 +492,7 @@ module.exports = {
     updateGame,
     // updateTimes,
     updatePlayers,
+    undoActivePlayers,
     findActiveGames,
     deleteGame
 }

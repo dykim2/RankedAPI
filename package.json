@@ -17,12 +17,14 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-async-handler": "^1.2.0",
+    "fix-esm": "^1.0.1",
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.2",
     "socket.io": "^4.7.5"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.5.7",
+    "@types/express": "^5.0.0",
     "nodemon": "^3.1.0"
   }
 }
