@@ -103,32 +103,6 @@ const updateChar = asyncHandler(async (req, res) => {
     throw new Error(err.message);
   }
 })
-const updateRestrictions = asyncHandler(async(req, res) => {
-  try{
-    const {id} = req.params;
-    // can do either one restriction or all restrictions
-    const idChar = await character.findById(id);
-    if(idChar.restrictions == undefined){
-      idChar.restrictions = ["", "", "", "", "", "", ""];
-    }
-    if(typeof req.body.restrictions == "undefined" && typeof req.body.restriction != "undefined" && req.body.type == "single"){
-      idChar.restrictions[req.body.index] = req.body.restriction;
-    }
-    else if (req.body.restrictions.length == 7 && req.body.type == "all") {
-      idChar.restrictions = req.body.restrictions;
-    } else {
-      throw new Error("Please make sure the restrictions input is valid!");
-    }
-    await idChar.save();
-    res.status(200).json({message: "Restrictions update successful!"})
-  }
-  catch(err){
-    if (res.statusCode == 200) {
-      res.status(500);
-    }
-    throw new Error(err.message);
-  }
-})
 const verify = (body, res) => {
   // if the requirements are not met, rejects the request
   if (typeof body.name === "undefined" || body.name == "") {
