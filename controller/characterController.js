@@ -153,6 +153,5 @@ module.exports = {
     getChar,
     getCharById,
     deleteChar,
-    updateChar,
-    updateRestrictions
+    updateChar
 }
