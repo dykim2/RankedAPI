@@ -17,6 +17,7 @@ const postGames = asyncHandler(async (req, res) => {
   }
   // console.log(req.body);
   const TOTAL_BANS = 6;
+  console.log("what")
   try {
     console.log("hi")
     // check for error
@@ -184,6 +185,8 @@ const findActiveGames = asyncHandler(async (req, res) => {
         },
         "_id result connected"
       )
+      .sort({_id: -1})
+      .limit(25)
       .exec();
     res.status(200).json([info, {message: "Active games successfully found!"}]);
   } 
