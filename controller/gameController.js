@@ -46,7 +46,7 @@ const postGames = asyncHandler(async (req, res) => {
       const addBoss = await boss.findById(req.body.initialBosses[0]);
       bossList.push(addBoss)
     }
-    const aeonblight = await boss.findById(19);
+    const aeonblight = await boss.findById(17);
     if(req.body.initialBosses[0] == -2){
       bossList.push(aeonblight);
     }
