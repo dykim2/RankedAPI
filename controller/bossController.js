@@ -21,6 +21,29 @@ const addBoss = asyncHandler(async(req, res) => {
     }
 })
 
+const addManyBosses = asyncHandler(async(req, res) => {
+    try{
+      if(Array.isArray(req.body)){
+        req.body.forEach(async (newBoss) => {
+          if(!verifyBoss(newBoss, res, true, true, true)){
+            console.log("bosses not verified.");
+            return false;
+          }
+          await boss.create(newBoss);
+        });
+      }
+      res.status(200).json({
+        message: "Boss created succesfully!"
+      });
+    }
+    catch(err){
+      if (res.statusCode == 200) {
+        res.status(500);
+      }
+      throw new Error(err.message);
+    }
+  })
+
 const getBosses = asyncHandler(async(req, res) => {
     try {
         // const info = await boss.find({}, 'boss icon');
@@ -89,6 +112,13 @@ const latestBoss = async() => {
 const deleteBoss = asyncHandler(async(req, res) => {
     try {
       const { id } = req.params;
+      /*
+      for(let i = 15; i < 18; i++){
+        await boss.findByIdAndDelete(i);
+      }
+      res.status(200).json({ message: "Deletion successful!" });
+      return;
+      */
       const deletedBoss = await boss.findByIdAndDelete(id);
       if (!deletedBoss) {
         res.status(404);
@@ -224,6 +254,7 @@ const verifyBoss = (body, res, checkBoss = false, checkIcon = false, checkType =
 
 module.exports = {
     addBoss,
+    addManyBosses,
     getBosses,
     getBossById,
     getLatestBoss,

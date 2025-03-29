@@ -56,6 +56,10 @@ const gameSchema = mongoose.Schema(
       type: [Number],
       default: [0, 0, 0], // captain 1, captain 2, ref 1, ref 2 connected?
     },
+    ready: {
+      type: [Number],
+      default: [0, 0], // captain 1, captain 2 readied up? as long as one player has readied up start is active
+    },
     hovered: {
       type: [Number],
       default: [-1, -1], // whatever pick is currently being hovered; an attempt to make the website backend decide on the pick when time runs out

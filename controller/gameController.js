@@ -68,6 +68,7 @@ const postGames = asyncHandler(async (req, res) => {
     req.body.pickst1 = [];
     req.body.pickst2 = [];
     req.body.extrabans = [] // capping at 4
+    req.body.timestamp = -1;
 
     
     for(let i = 0; i < TOTAL_BANS; i++){
