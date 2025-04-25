@@ -79,10 +79,13 @@ const postGames = asyncHandler(async (req, res) => {
         req.body.extrabans.push(defaultChar);
       }
     }
+    /*
     req.body.penaltyt1 = {};
     req.body.penaltyt2 = {};
     req.body.deatht1 = {};
     req.body.deatht2 = {};
+    
+   
     Object.assign(
       req.body.penaltyt1,
       Array(req.body.bosses.length).fill(Array(6).fill(false))
@@ -99,6 +102,7 @@ const postGames = asyncHandler(async (req, res) => {
       req.body.deatht2,
       Array(req.body.bosses.length).fill(Array(3).fill(false))
     );
+    */
     
     if(req.body.fearless == true){
       let fearlessBoss = []
