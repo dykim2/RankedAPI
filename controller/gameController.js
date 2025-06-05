@@ -46,7 +46,7 @@ const postGames = asyncHandler(async (req, res) => {
       const addBoss = await boss.findById(req.body.initialBosses[0]);
       bossList.push(addBoss)
     }
-    const aeonblight = await boss.findById(17);
+    const aeonblight = await boss.findById(16);
     if(req.body.initialBosses[0] == -2){
       bossList.push(aeonblight);
     }
@@ -393,6 +393,14 @@ const undoActivePlayers = asyncHandler(async(req, res) => {
   res.status(200).json({ message: "Player removal success!" });
 })
 
+const removeLogs = asyncHandler(async(req, res) => {
+  const {id} = req.params;
+  const result = await game.findById(id);
+  result.log = "";
+  await result.save();
+  res.status(200).json({message: `Log for game ${id} purged!`});
+})
+
 // update one boss' time per call
 /*
 const updateTimes = asyncHandler(async(req, res) => {
@@ -503,5 +511,6 @@ module.exports = {
     updatePlayers,
     undoActivePlayers,
     findActiveGames,
+    removeLogs,
     deleteGame
 }

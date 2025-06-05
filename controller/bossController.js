@@ -113,7 +113,7 @@ const deleteBoss = asyncHandler(async(req, res) => {
     try {
       const { id } = req.params;
       /*
-      for(let i = 15; i < 18; i++){
+      for(let i = 5; i < 52; i++){
         await boss.findByIdAndDelete(i);
       }
       res.status(200).json({ message: "Deletion successful!" });
