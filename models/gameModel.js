@@ -136,6 +136,10 @@ const gameSchema = mongoose.Schema(
     infolog: {
       type: String,
       default: ""
+    },
+    processing: { // whether a ban or pick is currently being processed; i.e. prvent it from happening twice
+      type: Boolean,
+      default: false
     }
   },
   {
