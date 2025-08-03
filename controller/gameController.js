@@ -16,10 +16,10 @@ const postGames = asyncHandler(async (req, res) => {
     req.body.fearless = false;
   }
   // console.log(req.body);
-  const TOTAL_BANS = 6;
-  console.log("what")
+  const TOTAL_BANS = req.body.totalBans;
+  const TOTAL_PICKS = 6;
+  // be prepared to change this to 8, again 3 + 1
   try {
-    console.log("hi")
     // check for error
     let gameResult = {};
     if (req.body._id == -1) {
@@ -66,17 +66,30 @@ const postGames = asyncHandler(async (req, res) => {
     req.body.bosses = bossList
     req.body.bans = [];
     req.body.pickst1 = [];
-    req.body.pickst2 = [];
+    req.body.pickst2 = []; 
     req.body.extrabans = [] // capping at 4
     req.body.timestamp = -1;
     req.body.logs = "";
 
     
-    for(let i = 0; i < TOTAL_BANS; i++){
-      req.body.bans.push(defaultChar);
-      req.body.pickst1.push(defaultChar);
-      req.body.pickst2.push(defaultChar);
-      if(i < req.body.extrabanst1 + req.body.extrabanst2){
+    for (
+      let i = 0;
+      i <
+      Math.max(
+        TOTAL_BANS,
+        TOTAL_PICKS,
+        req.body.extrabanst1 + req.body.extrabanst2
+      );
+      i++
+    ) {
+      if (i < TOTAL_BANS) {
+        req.body.bans.push(defaultChar);
+      }
+      if (i < TOTAL_PICKS) {
+        req.body.pickst1.push(defaultChar);
+        req.body.pickst2.push(defaultChar);
+      }
+      if (i < req.body.extrabanst1 + req.body.extrabanst2) {
         req.body.extrabans.push(defaultChar);
       }
     }
@@ -502,6 +515,23 @@ const deleteGame = asyncHandler(async (req, res) => {
   }
 });
 
+const deleteRange = asyncHandler(async (req, res) => {
+  /*
+  try {
+    for(let i = req.body.low; i < req.body.high; i++){
+      await game.findByIdAndDelete(i);
+    }
+    res.status(200).json({ message: "deletion of game range from " + req.body.low + " to " + req.body.high + " successful" });
+  } catch (err) {
+    if (res.statusCode == 200) {
+      res.status(500);
+    }
+    throw new Error(err.message);
+  }
+    */
+   res.status(200).json({message: "Operation successful!"});
+})
+
 module.exports = {
     getGames,
     postGames,
@@ -513,5 +543,6 @@ module.exports = {
     undoActivePlayers,
     findActiveGames,
     removeLogs,
-    deleteGame
+    deleteGame,
+    deleteRange
 }

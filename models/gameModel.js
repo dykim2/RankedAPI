@@ -20,6 +20,10 @@ const gameSchema = mongoose.Schema(
       type: [characterSchema],
       default: [],
     },
+    totalBans: {
+      type: Number,
+      default: 8,
+    },
     extrabans: {
       type: [characterSchema],
       default: [], // extra bans go in order, depending on the number of extra bans a team gets, max 3
@@ -131,16 +135,17 @@ const gameSchema = mongoose.Schema(
     },
     log: {
       type: String,
-      default: ""
+      default: "",
     },
     infolog: {
       type: String,
-      default: ""
+      default: "",
     },
-    processing: { // whether a ban or pick is currently being processed; i.e. prvent it from happening twice
+    processing: {
+      // whether a ban or pick is currently being processed; i.e. prvent it from happening twice
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   {
     timestamps: true,

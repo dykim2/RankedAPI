@@ -1,7 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const {getGames, postGames, findGame, findLatest, updateGame, updatePlayers, undoActivePlayers, deleteGame, findActiveGames, removeLogs} = require('../controller/gameController')
+const {getGames, postGames, findGame, findLatest, updateGame, updatePlayers, undoActivePlayers, deleteGame, findActiveGames, removeLogs, deleteRange} = require('../controller/gameController')
 
 router.post("/", postGames);
 
@@ -17,6 +17,7 @@ router.put("/game/:id", updateGame);
 // edit part of a game (namely, the times for each team) - moved to websockets
 // router.put("/times/:id", jsonParser, updateTimes);
 router.delete("/logs/:id", removeLogs);
-router.delete("/:id", deleteGame);
+router.delete("/one/:id", deleteGame);
+router.delete("/range", deleteRange);
 
 module.exports = router;
