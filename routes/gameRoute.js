@@ -1,7 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const {getGames, postGames, findGame, findLatest, updateGame, updatePlayers, undoActivePlayers, deleteGame, findActiveGames, removeLogs, deleteRange} = require('../controller/gameController')
+const {getGames, postGames, findGame, findLatest, updateGame, updatePlayers, getBanInfo, undoActivePlayers, deleteGame, findActiveGames, removeLogs, deleteRange} = require('../controller/gameController')
 
 router.post("/", postGames);
 
@@ -9,6 +9,7 @@ router.get("/all", getGames);
 router.get("/find/:id", findGame);
 router.get("/active", findActiveGames);
 router.get("/latest", findLatest);
+router.get("/bans/:id", getBanInfo);
 
 router.put("/players/:id", updatePlayers);
 router.put("/players/remove/:id", undoActivePlayers);

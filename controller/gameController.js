@@ -374,10 +374,21 @@ const updatePlayers = asyncHandler(async(req, res)=> {
   const {id} = req.params;
   const result = await game.findById(id);
   if(!doUpdate(result, req, res)){
-    return;
+    res.status(400).json({message: "Please choose a valid player!"});
   }
   await result.save();
-  res.status(200).json({message: "Player selection success!"})
+  res.status(200).json({message: "Player selection success!", totalBans: result.totalBans})
+})
+
+const getBanInfo = asyncHandler(async(req, res) => {
+  const { id } = req.params;
+  const result = await game.findById(id);
+  if(!result){
+    res.status(400).json({ message: "Please choose a valid game!" });
+  }
+  else{
+     res.status(200).json({message: "Ban info obtained!", totalBans: result.totalBans})
+  }
 })
 
 const undoActivePlayers = asyncHandler(async(req, res) => {
@@ -540,6 +551,7 @@ module.exports = {
     updateGame,
     // updateTimes,
     updatePlayers,
+    getBanInfo,
     undoActivePlayers,
     findActiveGames,
     removeLogs,
