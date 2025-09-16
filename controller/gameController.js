@@ -73,7 +73,6 @@ const postGames = asyncHandler(async (req, res) => {
     req.body.pickst2 = []; 
     req.body.extrabans = [] // capping at 4
     req.body.logs = "";
-    console.log("test test test test");
     for (
       let i = 0;
       i <
@@ -314,7 +313,6 @@ const updateGame = asyncHandler(async (req, res) => { // to update games, must s
 */
 
 const doUpdate = (result, req) => {
-  console.log("player: "+req.body.player)
   switch (req.body.player) {
     // verify the player count is valid
     // if it is not, returns a message saying it is invalid
