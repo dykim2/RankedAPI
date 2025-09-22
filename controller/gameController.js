@@ -420,7 +420,7 @@ const deleteGame = asyncHandler(async (req, res) => {
       res.status(404);
       throw new Error(`unable to locate a game with id ${id}`);
     }
-    res.status(200).json([deletedGame, { message: "deletion successful" }]);
+    res.status(200).json([deletedGame, {message: "deletion successful"}]);
   } catch (err) {
     if (res.statusCode == 200) {
       res.status(500);
@@ -429,22 +429,25 @@ const deleteGame = asyncHandler(async (req, res) => {
   }
 });
 
-const deleteRange = asyncHandler(async (req, res) => {
+const deleteRange = asyncHandler(async (req, res) => 
+{
   
-  try {
-    for(let i = req.body.low; i <= req.body.high; i++){
-      await game.findByIdAndDelete(i);
+}
+  /*
+  {
+    try {
+      for(let i = req.body.low; i <= req.body.high; i++){
+        await game.findByIdAndDelete(i);
+      }
+      res.status(200).json({ message: "deletion of game range from " + req.body.low + " to " + req.body.high + " successful" });
+    } catch (err) {
+      if (res.statusCode == 200) {
+        res.status(500);
+      }
+      throw new Error(err.message);
     }
-    res.status(200).json({ message: "deletion of game range from " + req.body.low + " to " + req.body.high + " successful" });
-  } catch (err) {
-    if (res.statusCode == 200) {
-      res.status(500);
-    }
-    throw new Error(err.message);
-  }
-    
-   res.status(200).json({message: "Operation successful!"});
-})
+  } */
+);
 
 module.exports = {
     getGames,
