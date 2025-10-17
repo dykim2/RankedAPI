@@ -64,14 +64,17 @@ const postGames = asyncHandler(async (req, res) => {
     for(let i = bossList.length; i < req.body.bossCount + length; i++){
       bossList.push(defaultBoss);
     }
-    // basically check if stuff is undefined, if it is defined then continue, if not then ignore
-    
-    // find a way to support 6 bosses, with a setting, also initially show a button at the bottom after pressing reg with custom settings
-    req.body.bosses = bossList
+    if(req.body.doBossBans){
+      req.body.bossBans = [defaultBoss, defaultBoss];
+    }
+    else{
+      req.body.bossBans = [];
+    }
+    req.body.bosses = bossList;
     req.body.bans = [];
     req.body.pickst1 = [];
     req.body.pickst2 = []; 
-    req.body.extrabans = [] // capping at 4
+    req.body.extrabans = [] // capping at 4 per team, 8 total
     req.body.logs = "";
     for (
       let i = 0;
@@ -201,7 +204,6 @@ const findLatest = asyncHandler(async(req, res) => {
     else{
       res.status(200).json({id: info._id, message: "Search success!"});
     }
-    
   }
   catch(err){
     if (res.statusCode == 200) {
@@ -213,7 +215,7 @@ const findLatest = asyncHandler(async(req, res) => {
 })
 
 const latest = async() => {
-  return await game.findOne().sort({ createdAt: -1 }).exec();
+  return await game.findOne().sort({createdAt: -1}).exec();
 }
 
 /*
@@ -430,23 +432,19 @@ const deleteGame = asyncHandler(async (req, res) => {
 });
 
 const deleteRange = asyncHandler(async (req, res) => 
-{
-  
-}
-  /*
   {
     try {
       for(let i = req.body.low; i <= req.body.high; i++){
         await game.findByIdAndDelete(i);
       }
-      res.status(200).json({ message: "deletion of game range from " + req.body.low + " to " + req.body.high + " successful" });
+      res.status(200).json({message: "deletion of game range from " + req.body.low + " to " + req.body.high + " successful"});
     } catch (err) {
       if (res.statusCode == 200) {
         res.status(500);
       }
       throw new Error(err.message);
     }
-  } */
+  } 
 );
 
 module.exports = {
