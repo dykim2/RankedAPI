@@ -4,10 +4,9 @@ const bossController = require("../controller/bossController.js");
 
 const postGames = asyncHandler(async (req, res) => {
   const DEFAULT_BOSS = 16; // aeonblight is default boss
+  const DEFAULT_TIMER = 455;
   // try to add the default pick / ban / boss
   // console.log("request")
-  // console.log(req.body)
-  req.body.fearless == "true" ? req.body.fearless = true : req.body.fearless = false;
   // console.log(req.body);
   const TOTAL_BANS = req.body.totalBans;
   const TOTAL_PICKS = 6;
@@ -33,18 +32,22 @@ const postGames = asyncHandler(async (req, res) => {
 
     const defaultChar = -1;
     // replace this with -1
-    const defaultBoss = -1;
+    const emptyBoss = -1;
     const newestBoss = await bossController.latestBoss();
     let bossList = [] // entering none for specific boss just means the standard none that is the default
+    req.body.presetBossCount = 0;
     if(req.body.initialBosses){
       if (
-        req.body.initialBosses[0] >= -1 &&
+        req.body.initialBosses[0] > -1 &&
         req.body.initialBosses[0] <= newestBoss
       ) {
-        const addBoss = req.body.initialBosses[0];
-        bossList.push(addBoss);
+        bossList.push(req.body.initialBosses[0]);
+        req.body.presetBossCount++;
       }
-      if (req.body.initialBosses[0] == -2) {
+      else if(req.body.initialBosses[0] == -1){
+        bossList.push(-1);
+      }
+      else if (req.body.initialBosses[0] == -2) {
         bossList.push(DEFAULT_BOSS);
       }
       if (
@@ -52,20 +55,22 @@ const postGames = asyncHandler(async (req, res) => {
         req.body.initialBosses[1] <= newestBoss
       ) {
         bossList.push(req.body.initialBosses[1]);
+        req.body.presetBossCount++;
       }
     } 
     else{
       bossList.push(DEFAULT_BOSS);
+      req.body.presetBossCount = 1;
     }
     let length = 7;
     if (req.body.division == "premier") {
       length = 9;
     }
     for(let i = bossList.length; i < req.body.bossCount + length; i++){
-      bossList.push(defaultBoss);
+      bossList.push(emptyBoss);
     }
     if(req.body.doBossBans){
-      req.body.bossBans = [defaultBoss, defaultBoss];
+      req.body.bossBans = [emptyBoss, emptyBoss];
     }
     else{
       req.body.bossBans = [];
@@ -98,15 +103,21 @@ const postGames = asyncHandler(async (req, res) => {
       }
     }
     if(req.body.fearless){
-      let fearlessBoss = []
+      let fearlessBoss = [];
       const thisGame = await game.findById(req.body.fearlessID);
       if(typeof thisGame != undefined){
-        fearlessBoss.push(thisGame.bosses);
+        fearlessBoss = thisGame.bosses;
       }
       req.body.fearlessBosses = fearlessBoss;
     }
     else{
       req.body.fearlessBosses = [];
+    }
+    if(req.body.pickTimerT1 == -1){
+      req.body.pickTimerT1 = DEFAULT_TIMER;
+    }
+    if(req.body.pickTimerT2 == -1){
+      req.body.pickTimerT2 = req.body.pickTimerT1;
     }
     const newGame = await game.create(req.body);
     let currStatus = true;
@@ -119,12 +130,16 @@ const postGames = asyncHandler(async (req, res) => {
       await newGame.save();
     }
     if(currStatus){
+      console.log(newGame);
       res.status(200).json(newGame);
     }
     else{
+      console.log("huh");
       res.status(409).json({message: verify})
     }
   } catch (err) {
+    console.log("an error was thrown?");
+    console.log(err);
     if (res.statusCode == 200) {
       res.status(400);
     } 
@@ -169,14 +184,15 @@ const findActiveGames = asyncHandler(async (req, res) => {
       .find(
         {
           $or: [
-            { result: "waiting" },
-            { result: "Waiting" }, 
-            { result: "setup" },
-            { result: "progress" },
-            { result: "boss" },
-            { result: "extraban" },
-            { result: "ban" },
-            { result: "pick" }
+            {result: "waiting"},
+            {result: "Waiting"}, 
+            {result: "setup"},
+            {result: "progress"},
+            {result: "boss"},
+            {result: "bossban"},
+            {result: "extraban"},
+            {result: "ban"},
+            {result: "pick"}
           ],
         },
         "_id result connected"
