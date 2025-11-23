@@ -110,11 +110,11 @@ const verify = (body, res) => {
     throw new Error("Please enter a valid name.")
   }
   /*
-        list of requirements: 
-        1) must have a name
-        2) must have an image link that matches the character name (i will upload them)
-        3) must have an element so text can be colored accordingly on display
-    */
+    list of requirements: 
+    1) must have a name
+    2) must have an image link that matches the character name (i will upload them)
+    3) must have an element so text can be colored accordingly on display
+  */
   return verifyElement(body, res);
 };
 const verifyElement = (body, res) => {

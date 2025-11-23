@@ -5,7 +5,7 @@ const {addChar, getChar, getCharById, deleteChar, updateChar} = require("../cont
 
 // the api must be able to add characters, and remove them.
 router.post("/add", addChar);
-router.get("/", getChar);
+router.get("/all", getChar);
 router.get("/:id", getCharById)
 router.put("/:id", updateChar)
 router.delete("/delete/:id", deleteChar)

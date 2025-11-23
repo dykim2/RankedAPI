@@ -1,31 +1,40 @@
 const mongoose = require("mongoose");
-const characterSchema = require("./characterModel").schema;
-const bossSchema = require("./bossModel").schema;
+// start replacing bosses in terms of how they are saved
+// save the number instead
 const gameSchema = mongoose.Schema(
   {
     _id: Number,
-    playerst1: {
-      type: [String],
-      default: ["p11", "p12", "p13"],
-    },
-    playerst2: {
-      type: [String],
-      default: ["p21", "p22", "p23"],
-    },
-    division: {
-      type: String,
-      default: "Standard",
-    },
     bans: {
-      type: [characterSchema],
+      type: [Number],
       default: [],
     },
     totalBans: {
       type: Number,
       default: 8,
     },
+    bossBans: {
+      type: [Number],
+      default: [], // would be up to 2 bans - 1 per team
+    },
+    bosses: {
+      type: [Number],
+      default: [],
+    },
+    connected: {
+      type: [Number],
+      default: [0, 0, 0], // captain 1, captain 2, ref 1, ref 2 connected?
+    },
+    division: {
+      type: String,
+      default: "Standard",
+    },
+    doBossBans: {
+      // do boss bans or not?
+      type: Boolean,
+      default: false,
+    },
     extrabans: {
-      type: [characterSchema],
+      type: [Number], // i think honestly replace schemas with numbers - save
       default: [], // extra bans go in order, depending on the number of extra bans a team gets, max 3
     },
     extrabanst1: {
@@ -36,14 +45,6 @@ const gameSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    bosses: {
-      type: [bossSchema],
-      default: [],
-    },
-    draft: {
-      type: Boolean,
-      default: true, // draft or blind game
-    },
     fearless: {
       type: Boolean,
       default: false,
@@ -52,26 +53,42 @@ const gameSchema = mongoose.Schema(
       type: [Number],
       default: [],
     },
-    result: {
-      type: String,
-      default: "waiting", // can be "waiting, setup", "progress", and "finish", or a winning team (1 or 2, in format of a string)
-    },
-    connected: {
-      type: [Number],
-      default: [0, 0, 0], // captain 1, captain 2, ref 1, ref 2 connected?
-    },
-    ready: {
-      type: [Number],
-      default: [0, 0], // captain 1, captain 2 readied up? as long as one player has readied up start is active
-    },
     hovered: {
       type: [Number],
       default: [-1, -1], // whatever pick is currently being hovered; an attempt to make the website backend decide on the pick when time runs out
       // needs to be unique per team, otherwise one team's hover will mess with the other team's hover
     },
-    timestamp: {
+    presetBossCount: {
       type: Number,
-      required: true, // the time the game was created; updates with startof game and when picks happen
+      default: 1,
+    },
+    log: {
+      type: String,
+      default: "",
+    },
+    longBoss: {
+      type: [Boolean],
+      default: [false, false],
+    },
+    pickst1: {
+      type: [Number],
+      default: [],
+    },
+    pickst2: {
+      type: [Number],
+      default: [],
+    },
+    playerst1: {
+      type: [String],
+      default: ["p11", "p12", "p13"],
+    },
+    playerst2: {
+      type: [String],
+      default: ["p21", "p22", "p23"],
+    },
+    result: {
+      type: String,
+      default: "waiting", // can be "waiting, setup", "progress", and "finish", or a winning team (1 or 2, in format of a string)
     },
     team1: {
       type: String,
@@ -81,70 +98,17 @@ const gameSchema = mongoose.Schema(
       type: String,
       default: "team 2",
     },
-    /*
-    penaltyt1: {
-      type: Object,
-      required: true,
+    totalTimeT1: {
+      type: Number,
+      default: 455,
     },
-    penaltyt2: {
-      type: Object,
-      required: true,
+    totalTimeT2: {
+      type: Number,
+      default: 455,
     },
-    deatht1: {
-      type: Object,
-      required: true,
-    },
-    deatht2: {
-      type: Object,
-      required: true,
-    },
-    */
     turn: {
       type: Number,
       default: 1, // the turn number
-    },
-    longBoss: {
-      type: [Boolean],
-      default: [false, false],
-    },
-    /*
-    timest1: {
-      type: [Number],
-      default: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-    },
-    timest2: {
-      type: [Number],
-      default: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-    },
-    */
-    pickst1: {
-      type: [characterSchema],
-      default: [],
-    },
-    pickst2: {
-      type: [characterSchema],
-      default: [],
-    },
-    pickorder: {
-      type: [characterSchema],
-      default: [],
-    },
-    supportBans: {
-      type: Boolean,
-      default: false,
-    },
-    log: {
-      type: String,
-      default: "",
-    },
-    infolog: {
-      type: String,
-      default: "",
-    },
-    processing: {
-      // whether a ban or pick is currently being processed; i.e. prvent it from happening twice
-      type: Boolean,
-      default: false,
     },
   },
   {
